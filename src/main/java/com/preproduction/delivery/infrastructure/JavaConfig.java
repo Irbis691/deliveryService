@@ -1,4 +1,4 @@
-package com.preproduction.delivery.locator;
+package com.preproduction.delivery.infrastructure;
 
 import com.preproduction.delivery.repository.InMemPizzaRepository;
 import com.preproduction.delivery.repository.InMemOrderRepository;
