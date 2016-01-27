@@ -4,6 +4,7 @@ import com.preproduction.delivery.domain.Pizza;
 
 import java.util.HashMap;
 import java.util.Map;
+import com.preproduction.delivery.infrastructure.Benchmark;
 
 /**
  * Created by Mantixop on 1/21/16.
@@ -12,6 +13,8 @@ public class InMemPizzaRepository implements PizzaRepository {
 
     private static final Map<Integer, Pizza> pizzasDB = new HashMap<Integer, Pizza>();
 
+    @Benchmark
+    @Override
     public void init() {
         pizzasDB.put(1, new Pizza(1,"Sea",20d,Pizza.PizzaTipe.Sea));
         pizzasDB.put(2, new Pizza(2,"Meat",10d,Pizza.PizzaTipe.Meat));

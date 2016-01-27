@@ -32,9 +32,10 @@ public class JavaConfigApplicationContext implements ApplicationContext {
         }
 
         BeanBuilder builder = new BeanBuilder(type);
-        builder.construct();
-        builder.afterConstruct();
+        builder.construct();        
         builder.createProxy();
+        builder.callPostCreateAnnotatedMethod();
+        builder.afterConstruct();
         bean = builder.build();
 
         beans.put(beanName, bean);
@@ -48,23 +49,32 @@ public class JavaConfigApplicationContext implements ApplicationContext {
 
         public BeanBuilder(Class<?> type) {
             this.type = type;
-        }                
+        }
         
         public void construct() throws Exception {
-            Constructor<?> constructor = type.getConstructors()[0];
-            Parameter[] parameters = constructor.getParameters();
-            if (parameters.length == 0) {
+            Constructor<?> constructor = type.getConstructors()[0];            
+            if (constructor.getParameterCount() == 0) {
                 bean = type.newInstance();
             } else {
-                int counter = 0;
-                Object[] params = new Object[parameters.length];
-                for (Parameter p : parameters) {
-                    String typeName = p.getType().getSimpleName();
-                    String nameOfBean = Character.toLowerCase(typeName.charAt(0)) + typeName.substring(1);
-                    params[counter++] = getBean(nameOfBean);
-                }
-                bean = constructor.newInstance(params);
+                bean = recurConstruct(constructor);
             }
+        }
+
+        private Object recurConstruct(Constructor<?> constructor) throws Exception {
+            Parameter[] parameters = constructor.getParameters();
+            Object[] params = new Object[parameters.length];
+            for (int i = 0; i < parameters.length; i++) {                
+                String nameOfBean = getBeanNameByType(parameters[i]);
+                params[i] = getBean(nameOfBean);
+            }
+            return constructor.newInstance(params);
+        }
+
+        private String getBeanNameByType(Parameter parameter) {
+            String typeName = parameter.getType().getSimpleName();
+            String nameOfBean = Character.toLowerCase(typeName.charAt(0)) +
+                    typeName.substring(1);
+            return nameOfBean;
         }
 
         public void afterConstruct() throws Exception {
@@ -72,10 +82,21 @@ public class JavaConfigApplicationContext implements ApplicationContext {
             Method method = null;
             try {
                 method = clazz.getMethod("init");
-            } catch(NoSuchMethodException ex) {}            
+            } catch(NoSuchMethodException ex) {
+                return;
+            }            
             if(method != null) {
                 method.invoke(bean);
             }
+        }
+        
+        private void callPostCreateAnnotatedMethod() throws Exception {            
+            for (Method method : bean.getClass().getMethods()) {
+                if (method.isAnnotationPresent(PostCreate.class)) {
+                    method.invoke(bean);
+                }
+            }
+                    
         }
 
         public void preDestroy() {
@@ -83,7 +104,12 @@ public class JavaConfigApplicationContext implements ApplicationContext {
         }
 
         public void createProxy() {
-
+            for(Method method: bean.getClass().getMethods()) {
+                if(method.isAnnotationPresent(Benchmark.class)) {
+                    bean = new BenchmarkProxyCreator().getProxy(bean);
+                    break;
+                }
+            }            
         }
 
         public Object build() {
