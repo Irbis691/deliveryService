@@ -6,10 +6,10 @@ package com.preproduction.delivery.domain;
 public class Pizza {
     private Integer id;
     private String name;
-    private Double price;
-    private PizzaTipe pizzaTipe;
+    private Integer price;
+    private final PizzaTipe pizzaTipe;
 
-    public Pizza(Integer id, String name, Double price, PizzaTipe pizzaTipe) {
+    public Pizza(Integer id, String name, Integer price, PizzaTipe pizzaTipe) {
         this.id = id;
         this.name = name;
         this.price = price;
@@ -32,17 +32,21 @@ public class Pizza {
         this.name = name;
     }
 
-    public Double getPrice() {
+    public Integer getPrice() {
         return price;
     }
 
-    public void setPrice(Double price) {
+    public void setPrice(Integer price) {
         this.price = price;
     }
 
     public enum PizzaTipe {
-        Vegetarian, Sea, Meat
+        Vegetarian, Sea, Meat, Americana, Hawaiian
     }
+
+    public PizzaTipe getPizzaTipe() {
+        return pizzaTipe;
+    }        
 
     @Override
     public String toString() {

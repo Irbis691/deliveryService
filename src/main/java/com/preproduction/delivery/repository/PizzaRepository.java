@@ -5,9 +5,7 @@ import com.preproduction.delivery.domain.Pizza;
 /**
  * Created by Mantixop on 1/21/16.
  */
-public interface PizzaRepository {
-    
-    void init();
+public interface PizzaRepository {    
     
     Pizza findById(Integer id);
 }

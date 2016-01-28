@@ -32,10 +32,10 @@ public class JavaConfigApplicationContext implements ApplicationContext {
         }
 
         BeanBuilder builder = new BeanBuilder(type);
-        builder.construct();        
-        builder.createProxy();
+        builder.construct();                
         builder.callPostCreateAnnotatedMethod();
         builder.afterConstruct();
+        builder.createProxy();
         bean = builder.build();
 
         beans.put(beanName, bean);
@@ -78,20 +78,20 @@ public class JavaConfigApplicationContext implements ApplicationContext {
         }
 
         public void afterConstruct() throws Exception {
-            Class<?> clazz = bean.getClass();
+            Class<?> clazz = bean.getClass();            
             Method method = null;
             try {
                 method = clazz.getMethod("init");
             } catch(NoSuchMethodException ex) {
                 return;
-            }            
-            if(method != null) {
+            }
+            if(method != null) {                
                 method.invoke(bean);
             }
         }
         
-        private void callPostCreateAnnotatedMethod() throws Exception {            
-            for (Method method : bean.getClass().getMethods()) {
+        private void callPostCreateAnnotatedMethod() throws Exception {               
+            for (Method method : type.getClass().getMethods()) {
                 if (method.isAnnotationPresent(PostCreate.class)) {
                     method.invoke(bean);
                 }

@@ -13,7 +13,12 @@ public class InMemOrderRepository implements OrderRepository {
     private final List<Order> orders = new ArrayList<Order>();
 
     public Order save(Order order) {
+        setOrderId(order);
         orders.add(order);
         return order;
+    }
+
+    private void setOrderId(Order order) {
+        order.setId(orders.size());
     }
 }

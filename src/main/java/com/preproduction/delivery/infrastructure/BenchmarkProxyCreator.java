@@ -29,7 +29,8 @@ public class BenchmarkProxyCreator {
                     long startTime = System.nanoTime();
                     Object result = method.invoke(o, args);
                     System.out.println("Method " + method.getName() + "is finished");
-                    System.out.println("Time: " + (System.nanoTime() - startTime));
+                    System.out.println("Total time: " + 
+                            (System.nanoTime() - startTime) + " nanosecconds");
                     return result;
                 } else {
                     return method.invoke(o, args);
