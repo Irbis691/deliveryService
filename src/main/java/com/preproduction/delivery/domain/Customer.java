@@ -8,7 +8,10 @@ public class Customer {
     private String name;
     private Address address;
     private BonusCard bonusCard;
-    
+
+    public Customer() {
+    }
+
     public Customer(int id, String name, Address address) {
         this.id = id;
         this.name = name;

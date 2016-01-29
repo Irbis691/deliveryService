@@ -22,11 +22,14 @@ public class SimpleOrderService implements OrderService{
     private OrderRepository orderRepository;
     private PizzaService pizzaService;
 
-    public SimpleOrderService(OrderRepository orderRepository, 
-            PizzaService pizzaService) {
+    public SimpleOrderService() {
+    }
+
+    public SimpleOrderService(OrderRepository orderRepository,
+                              PizzaService pizzaService) {
         this.orderRepository = orderRepository;
         this.pizzaService = pizzaService;
-    }    
+    }
     
     public Order placeNewOrder(Customer customer, Integer ... pizzasID) 
             throws IllegalArgumentException {

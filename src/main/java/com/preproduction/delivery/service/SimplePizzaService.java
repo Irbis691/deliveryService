@@ -10,6 +10,9 @@ public class SimplePizzaService implements PizzaService {
     
     PizzaRepository pizzaRepository;
 
+    public SimplePizzaService() {
+    }
+
     public SimplePizzaService(PizzaRepository pizzaRepository) {
         this.pizzaRepository = pizzaRepository;
     }

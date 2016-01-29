@@ -13,8 +13,11 @@ public class Order {
     private Integer orderPrice;
     private OrderStatus orderType;
 
+    public Order() {
+    }
+
     public Order(Customer customer, List<Pizza> pizzas, Integer orderPrice,
-            OrderStatus orderTipe) {        
+                 OrderStatus orderTipe) {
         this.customer = customer;
         this.pizzas = pizzas;
         this.orderPrice = orderPrice;

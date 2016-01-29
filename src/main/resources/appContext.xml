@@ -2,10 +2,20 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 ">
 
-    <bean id = "pizzaRepo" class = "com.preproduction.delivery.repository.InMemPizzaRepository"
-        init-method="init" />
-    
+    <bean id = "orderService" class="com.preproduction.delivery.service.SimpleOrderService">
+        <constructor-arg ref="orderRepo" />
+        <constructor-arg ref="pizzaService" />
+    </bean>
+
+    <bean id = "pizzaService" class="com.preproduction.delivery.service.SimplePizzaService">
+        <constructor-arg ref="pizzaRepo" />
+    </bean>
+
+    <bean id="customerService" class="com.preproduction.delivery.service.SimpleCustomerService" />
+
+    <bean name="customer" factory-bean="customerService" factory-method="createCustomer"/>
+
 </beans>
