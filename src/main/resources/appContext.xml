@@ -18,4 +18,8 @@
 
     <bean name="customer" factory-bean="customerService" factory-method="createCustomer"/>
 
+    <bean name="newCustomer" class="com.preproduction.delivery.service.SimpleCustomerService">
+        <constructor-arg value="Illia" />
+    </bean>
+
 </beans>

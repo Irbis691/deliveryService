@@ -23,6 +23,9 @@ public class SpringDeliveryApp {
         ConfigurableApplicationContext applicationContext = new ClassPathXmlApplicationContext(new String[]{"appContext.xml", "repoContext.xml"});
 
         Customer customer = applicationContext.getBean("customer", Customer.class);
+        Customer customer1 = applicationContext.getBean("newCustomer", Customer.class);
+
+        System.out.println(customer1);
 
         PizzaRepository pizzaRepository = (PizzaRepository) applicationContext.getBean("pizzaRepo");        
         System.out.println(pizzaRepository.findById(1));

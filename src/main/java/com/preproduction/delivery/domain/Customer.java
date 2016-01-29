@@ -9,6 +9,10 @@ public class Customer {
     private Address address;
     private BonusCard bonusCard;
 
+    public Customer(String name) {
+        this.name = name;
+    }
+
     public Customer() {
     }
 
