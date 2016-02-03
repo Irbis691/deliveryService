@@ -1,36 +1,40 @@
 package com.preproduction.delivery.domain;
 
+import com.preproduction.delivery.infrastructure.MyComponent;
 import java.util.List;
+import org.springframework.stereotype.Component;
 
 /**
  * Created by Mantixop on 1/21/16.
  */
+@Component
+@MyComponent
 public class Order {        
     
     private Integer id;
     private Customer customer;
     private List<Pizza> pizzas;
     private Integer orderPrice;
-    private OrderStatus orderType;
+    private OrderStatus OrderStatus;
 
     public Order() {
     }
 
     public Order(Customer customer, List<Pizza> pizzas, Integer orderPrice,
-                 OrderStatus orderTipe) {
+                 OrderStatus orderStatus) {
         this.customer = customer;
         this.pizzas = pizzas;
         this.orderPrice = orderPrice;
-        this.orderType = orderTipe;
+        this.OrderStatus = orderStatus;
     } 
     
     public Order(Integer id, Customer customer, List<Pizza> pizzas, 
-            Integer orderPrice, OrderStatus orderTipe) {
+            Integer orderPrice, OrderStatus orderStatus) {
         this.id = id;
         this.customer = customer;
         this.pizzas = pizzas;
         this.orderPrice = orderPrice;
-        this.orderType = orderTipe;
+        this.OrderStatus = orderStatus;
     }   
 
     public Integer getId() {
@@ -75,12 +79,12 @@ public class Order {
                 
     }
 
-    public OrderStatus getOrderType() {
-        return orderType;
+    public OrderStatus getOrderStatus() {
+        return OrderStatus;
     }
 
-    public void setOrderType(OrderStatus orderType) {
-        this.orderType = orderType;
+    public void setOrderStatus(OrderStatus orderType) {
+        this.OrderStatus = orderType;
     }        
 
     public Integer getOrderPrice() {
@@ -95,7 +99,7 @@ public class Order {
     public String toString() {
         return "Order{" + "id=" + id + ", customer=" + customer +
                 ", pizzas=" + pizzas + ", orderPrice=" + orderPrice +
-                ", orderTipe=" + orderType + '}';
+                ", OrderStatus=" + OrderStatus + '}';
     }        
     
 }

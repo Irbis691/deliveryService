@@ -5,16 +5,22 @@
  */
 package com.preproduction.delivery.domain;
 
+import org.springframework.stereotype.Component;
+
 /**
  *
  * @author Irbis
  */
+@Component
 public class BonusCard {
     
     private static final Double BONUS_PERCENT = 0.1;
     
     private Integer id;    
     private Integer bonusSize;
+
+    public BonusCard() {
+    }        
     
     public Integer getId() {
         return id;

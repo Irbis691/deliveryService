@@ -7,9 +7,12 @@ public class Pizza {
     private Integer id;
     private String name;
     private Integer price;
-    private final PizzaTipe pizzaTipe;
+    private PizzaType pizzaTipe;  
 
-    public Pizza(Integer id, String name, Integer price, PizzaTipe pizzaTipe) {
+    public Pizza() {        
+    }        
+    
+    public Pizza(Integer id, String name, Integer price, PizzaType pizzaTipe) {
         this.id = id;
         this.name = name;
         this.price = price;
@@ -40,11 +43,11 @@ public class Pizza {
         this.price = price;
     }
 
-    public enum PizzaTipe {
+    public enum PizzaType {
         Vegetarian, Sea, Meat, Americana, Hawaiian
     }
 
-    public PizzaTipe getPizzaTipe() {
+    public PizzaType getPizzaTipe() {
         return pizzaTipe;
     }        
 

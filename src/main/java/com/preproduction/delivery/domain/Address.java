@@ -14,6 +14,9 @@ public class Address {
     private int houseNum;
     private int flatNum;
 
+    public Address() {
+    }        
+
     public Address(String street, int houseNum, int flatNum) {
         this.street = street;
         this.houseNum = houseNum;

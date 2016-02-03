@@ -50,9 +50,9 @@ public class DeliveryApp {
             ex.printStackTrace();
         }
         
-        Order order = orderService.placeNewOrder(new Customer(1, "Customer",
-                new Address("Vyhurovskiy blvd", 3, 33)), 1, 2, 3, 4, 5);
+//        Order order = orderService.placeNewOrder(new Customer(1, "Customer",
+//                new Address("Vyhurovskiy blvd", 3, 33)), 1, 2, 3, 4, 5);
         
-        System.out.println(order);
+//        System.out.println(order);
     }
 }

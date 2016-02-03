@@ -4,16 +4,20 @@ import com.preproduction.delivery.domain.BonusCard;
 import com.preproduction.delivery.domain.Customer;
 import com.preproduction.delivery.domain.Order;
 import com.preproduction.delivery.domain.Pizza;
+import com.preproduction.delivery.infrastructure.Benchmark;
 import com.preproduction.delivery.repository.OrderRepository;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  * Created by Mantixop on 1/21/16.
  */
-public class SimpleOrderService implements OrderService{
+@Service
+public abstract class SimpleOrderService implements OrderService { //, ApplicationContextAware{
     
     private static final double DISCOUNT_FOR_BIG_SIZE_ORDER = 0.7;
     private static final int ORDER_SIZE_THRESHOLD = 4;
@@ -21,26 +25,34 @@ public class SimpleOrderService implements OrderService{
             
     private OrderRepository orderRepository;
     private PizzaService pizzaService;
+//    private ApplicationContext appContext;
 
     public SimpleOrderService() {
     }
 
+    @Autowired
     public SimpleOrderService(OrderRepository orderRepository,
                               PizzaService pizzaService) {
         this.orderRepository = orderRepository;
         this.pizzaService = pizzaService;
     }
     
+    @Benchmark
     public Order placeNewOrder(Customer customer, Integer ... pizzasID) 
             throws IllegalArgumentException {
         checkPizzasNumber(pizzasID.length);
         List<Pizza> pizzas = getListOfPizzasById(pizzasID);       
         Integer orderPrice = countOrderPrice(pizzas, customer);
-        Order newOrder = new Order(customer, pizzas, orderPrice,
-                Order.OrderStatus.NEW);
+        Order newOrder = createNewOrder();
         saveOrder(newOrder);
         return newOrder;
-    }     
+    }
+    
+    abstract Order createNewOrder();
+//        return new Order(customer, pizzas, orderPrice,
+//                Order.OrderStatus.NEW);
+//        return (Order) appContext.getBean("order");
+    
     
     public void addMorePizzasToOrder(Order order, Integer ... pizzasID) 
             throws IllegalArgumentException {
@@ -104,9 +116,9 @@ public class SimpleOrderService implements OrderService{
     }
     
     public void changeOrderStatus(Order order, Order.OrderStatus orderStatus) {
-        Order.OrderStatus type = order.getOrderType();
+        Order.OrderStatus type = order.getOrderStatus();
         if(Arrays.asList(type.getValidTransitionStatuses()).contains(orderStatus)) {
-            order.setOrderType(orderStatus);
+            order.setOrderStatus(orderStatus);
         } else {
             throw new IllegalArgumentException("Not valid transition status");
         }
@@ -126,5 +138,9 @@ public class SimpleOrderService implements OrderService{
     private Pizza getPizzaByID(Integer id) {
         return pizzaService.find(id);
     }
+
+//    public void setApplicationContext(ApplicationContext ac) throws BeansException {
+//        this.appContext = ac;
+//    }
 
 }

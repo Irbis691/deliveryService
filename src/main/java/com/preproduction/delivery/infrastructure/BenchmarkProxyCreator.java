@@ -15,7 +15,16 @@ import java.lang.reflect.Proxy;
  */
 public class BenchmarkProxyCreator {
 
-    public Object getProxy(final Object o) {
+    public Object checkForAnnotExisting(final Object o) {
+        for (Method method : o.getClass().getMethods()) {
+            if (method.isAnnotationPresent(Benchmark.class)) {
+                return getProxy(o);
+            }
+        }
+        return o;
+    }
+
+    private Object getProxy(final Object o) {
 
         final Class<?> type = o.getClass();
 
@@ -24,19 +33,19 @@ public class BenchmarkProxyCreator {
 
             public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
                 if (type.getMethod(method.getName(), method.getParameterTypes()).
-                        isAnnotationPresent(Benchmark.class)) {                    
+                        isAnnotationPresent(Benchmark.class)) {
                     System.out.println("Method " + method.getName() + "is started");
                     long startTime = System.nanoTime();
                     Object result = method.invoke(o, args);
                     System.out.println("Method " + method.getName() + "is finished");
-                    System.out.println("Total time: " + 
-                            (System.nanoTime() - startTime) + " nanosecconds");
+                    System.out.println("Total time: "
+                            + (System.nanoTime() - startTime) + " nanosecconds");
                     return result;
                 } else {
                     return method.invoke(o, args);
                 }
             }
-            
+
         });
     }
 }

@@ -1,20 +1,26 @@
 package com.preproduction.delivery.domain;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 /**
  * Created by Mantixop on 1/21/16.
  */
+
 public class Customer {
     private int id;
     private String name;
+    @Autowired
     private Address address;
+    @Autowired
     private BonusCard bonusCard;
-
-    public Customer(String name) {
-        this.name = name;
-    }
 
     public Customer() {
     }
+
+    public Customer(String name) {
+        this.name = name;
+    }        
 
     public Customer(int id, String name, Address address) {
         this.id = id;
@@ -27,7 +33,7 @@ public class Customer {
         this.name = name;
         this.address = address;
         this.bonusCard = bonusCard;
-    }        
+    }
 
     public int getId() {
         return id;

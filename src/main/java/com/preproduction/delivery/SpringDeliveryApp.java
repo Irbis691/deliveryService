@@ -8,8 +8,13 @@ package com.preproduction.delivery;
 import com.preproduction.delivery.domain.Address;
 import com.preproduction.delivery.domain.Customer;
 import com.preproduction.delivery.domain.Order;
+import com.preproduction.delivery.domain.Pizza;
+
 import com.preproduction.delivery.repository.PizzaRepository;
 import com.preproduction.delivery.service.OrderService;
+import com.preproduction.delivery.service.SimpleOrderService;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -20,23 +25,40 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 public class SpringDeliveryApp {
     
     public static void main(String[] args) {
-        ConfigurableApplicationContext applicationContext = new ClassPathXmlApplicationContext(new String[]{"appContext.xml", "repoContext.xml"});
-
-        Customer customer = applicationContext.getBean("customer", Customer.class);
+        
+        ConfigurableApplicationContext repositoryContext = new ClassPathXmlApplicationContext("repoContext.xml");
+        
+        ConfigurableApplicationContext applicationContext = new ClassPathXmlApplicationContext(new String[]{"appContext.xml"}, repositoryContext);
+        
+        ApplicationContext parent = applicationContext.getParent();
+        
+        System.out.println("Parent: " + parent);
+        
         Customer customer1 = applicationContext.getBean("newCustomer", Customer.class);
 
         System.out.println(customer1);
 
         PizzaRepository pizzaRepository = (PizzaRepository) applicationContext.getBean("pizzaRepo");        
-        System.out.println(pizzaRepository.findById(1));
+        System.out.println(pizzaRepository.findById(1));                
 
-        OrderService orderService = (OrderService) applicationContext.getBean("orderService");
-        Order order = orderService.placeNewOrder(new Customer(1, "Customer",
-                new Address("Vyhurovskiy blvd", 3, 33)), 1, 2, 3, 4, 5);
+        for(String s: applicationContext.getBeanDefinitionNames()) {
+            System.out.println(s);
+        }
+        
+//        applicationContext.publishEvent(new ApplicationEvent(applicationContext){});
+        
+        OrderService orderService = (OrderService) applicationContext.getBean(OrderService.class);
+        Order order = orderService.placeNewOrder(new Customer("Customer"), 1, 2, 3);
 
         System.out.println(order);
-
+        
+        
+        
+//        Pizza pizza = (Pizza) applicationContext.getBean("pizzaFactoryBean");
+//        System.out.println(pizza);
+        
         applicationContext.close();
+        repositoryContext.close();
     }
     
 }

@@ -104,12 +104,13 @@ public class JavaConfigApplicationContext implements ApplicationContext {
         }
 
         public void createProxy() {
-            for(Method method: bean.getClass().getMethods()) {
-                if(method.isAnnotationPresent(Benchmark.class)) {
-                    bean = new BenchmarkProxyCreator().getProxy(bean);
-                    break;
-                }
-            }            
+//            for(Method method: bean.getClass().getMethods()) {
+//                if(method.isAnnotationPresent(Benchmark.class)) {
+//                    bean = new BenchmarkProxyCreator().getProxy(bean);
+//                    break;
+//                }
+//            }  
+            bean = new BenchmarkProxyCreator().checkForAnnotExisting(bean);
         }
 
         public Object build() {
