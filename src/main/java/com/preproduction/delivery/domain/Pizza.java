@@ -1,22 +1,23 @@
 package com.preproduction.delivery.domain;
 
 /**
- * Created by Mantixop on 1/21/16.
+ *
+ * @author Irbis
  */
 public class Pizza {
     private Integer id;
     private String name;
     private Integer price;
-    private PizzaType pizzaTipe;  
+    private PizzaType pizzaType;  
 
     public Pizza() {        
     }        
     
-    public Pizza(Integer id, String name, Integer price, PizzaType pizzaTipe) {
+    public Pizza(Integer id, String name, Integer price, PizzaType pizzaType) {
         this.id = id;
         this.name = name;
         this.price = price;
-        this.pizzaTipe = pizzaTipe;
+        this.pizzaType = pizzaType;
     }
 
     public Integer getId() {
@@ -47,8 +48,8 @@ public class Pizza {
         Vegetarian, Sea, Meat, Americana, Hawaiian
     }
 
-    public PizzaType getPizzaTipe() {
-        return pizzaTipe;
+    public PizzaType getPizzaType() {
+        return pizzaType;
     }        
 
     @Override
@@ -57,7 +58,7 @@ public class Pizza {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", price=" + price +
-                ", pizzaTipe=" + pizzaTipe +
+                ", pizzaType=" + pizzaType +
                 '}';
     }
 }

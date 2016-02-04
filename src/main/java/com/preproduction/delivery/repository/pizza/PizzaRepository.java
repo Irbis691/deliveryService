@@ -1,9 +1,10 @@
-package com.preproduction.delivery.repository;
+package com.preproduction.delivery.repository.pizza;
 
 import com.preproduction.delivery.domain.Pizza;
 
 /**
- * Created by Mantixop on 1/21/16.
+ *
+ * @author Irbis
  */
 public interface PizzaRepository {    
     

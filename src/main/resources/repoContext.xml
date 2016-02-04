@@ -7,9 +7,7 @@
        xsi:schemaLocation="
 http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">    
-    <context:component-scan base-package="com.preproduction.delivery.service, com.preproduction.delivery.domain" />
-    
-    <bean class="com.preproduction.delivery.infrastructure.BenchmarkBeanPostProcessor" />
+    <context:component-scan base-package="com.preproduction.delivery.repository" />        
 
     <bean name="pizzaFactoryBean" class="com.preproduction.delivery.infrastructure.PizzaFactoryBean">
         <property name="id" value="1" />
@@ -18,7 +16,7 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
         <property name="type" value="Sea" />
     </bean> 
     
-    <bean id = "pizzaRepo" class = "com.preproduction.delivery.repository.InMemPizzaRepository"
+<!--    <bean id = "pizzaRepo" class = "com.preproduction.delivery.repository.InMemPizzaRepository"
           init-method="init">
         <property name="pizzasDB">
             <map>
@@ -48,8 +46,6 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
                 </entry>
             </map>            
         </property>
-    </bean>
-
-    <bean id = "orderRepo" class = "com.preproduction.delivery.repository.InMemOrderRepository"/>
+    </bean>-->   
 
 </beans>

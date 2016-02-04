@@ -1,41 +1,33 @@
 package com.preproduction.delivery.domain;
 
-import com.preproduction.delivery.infrastructure.MyComponent;
+import java.util.Arrays;
 import java.util.List;
 import org.springframework.stereotype.Component;
 
 /**
- * Created by Mantixop on 1/21/16.
+ *
+ * @author Irbis
  */
 @Component
-@MyComponent
-public class Order {        
+public class Order {
     
+    private static final int MAX_ORDER_SIZE = 10;
+
     private Integer id;
     private Customer customer;
     private List<Pizza> pizzas;
-    private Integer orderPrice;
     private OrderStatus OrderStatus;
 
     public Order() {
     }
 
-    public Order(Customer customer, List<Pizza> pizzas, Integer orderPrice,
-                 OrderStatus orderStatus) {
-        this.customer = customer;
-        this.pizzas = pizzas;
-        this.orderPrice = orderPrice;
-        this.OrderStatus = orderStatus;
-    } 
-    
-    public Order(Integer id, Customer customer, List<Pizza> pizzas, 
-            Integer orderPrice, OrderStatus orderStatus) {
+    public Order(Integer id, Customer customer, List<Pizza> pizzas,
+            OrderStatus orderStatus) {
         this.id = id;
         this.customer = customer;
         this.pizzas = pizzas;
-        this.orderPrice = orderPrice;
         this.OrderStatus = orderStatus;
-    }   
+    }
 
     public Integer getId() {
         return id;
@@ -59,24 +51,6 @@ public class Order {
 
     public void setPizzas(List<Pizza> pizzas) {
         this.pizzas = pizzas;
-    }    
-
-    public enum OrderStatus {
-        DONE(),
-        CANCELED(),
-        IN_PROGRES(CANCELED, DONE),
-        NEW(IN_PROGRES, CANCELED, DONE);
-        
-        private final OrderStatus[] validTransitionStatuses;
-
-        private OrderStatus(OrderStatus ... validTransitionStatuses) {
-            this.validTransitionStatuses = validTransitionStatuses;
-        }
-
-        public OrderStatus[] getValidTransitionStatuses() {
-            return validTransitionStatuses;
-        }
-                
     }
 
     public OrderStatus getOrderStatus() {
@@ -85,21 +59,55 @@ public class Order {
 
     public void setOrderStatus(OrderStatus orderType) {
         this.OrderStatus = orderType;
-    }        
-
-    public Integer getOrderPrice() {
-        return orderPrice;
     }
 
-    public void setOrderPrice(Integer orderPrice) {
-        this.orderPrice = orderPrice;
-    }        
+    public int getOrderPrice() {
+        int price = 0;
+        for (Pizza p : pizzas) {
+            price += p.getPrice();
+        }
+        return price;
+    }
+    
+    public void addPizzas(List<Pizza> newPizzas) {
+        for(Pizza p: newPizzas) {
+            if(this.pizzas.size() >= MAX_ORDER_SIZE) {
+                break;
+            }
+            pizzas.add(p);
+        }
+    }
 
     @Override
     public String toString() {
-        return "Order{" + "id=" + id + ", customer=" + customer +
-                ", pizzas=" + pizzas + ", orderPrice=" + orderPrice +
-                ", OrderStatus=" + OrderStatus + '}';
-    }        
-    
+        return "Order{" + "id=" + id + ", customer=" + customer
+                + ", pizzas=" + pizzas + ", OrderStatus=" + OrderStatus + '}';
+    }
+
+    public enum OrderStatus {
+        DONE(),
+        CANCELED(),
+        IN_PROGRES(CANCELED, DONE),
+        NEW(IN_PROGRES, CANCELED);
+
+        private final OrderStatus[] validTransitionStatuses;
+
+        private OrderStatus(OrderStatus... validTransitionStatuses) {
+            this.validTransitionStatuses = validTransitionStatuses;
+        }
+
+        public OrderStatus[] getValidTransitionStatuses() {
+            return validTransitionStatuses;
+        }
+
+    }
+
+    public void changeOrderStatus(OrderStatus orderStatus) { 
+        OrderStatus currStatus = getOrderStatus();
+        if (Arrays.asList(currStatus.getValidTransitionStatuses()).contains(orderStatus)) {
+            setOrderStatus(orderStatus);
+        } else {
+            throw new IllegalArgumentException("Not valid transition status");
+        }
+    }
 }

@@ -34,10 +34,10 @@ public class BenchmarkProxyCreator {
             public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
                 if (type.getMethod(method.getName(), method.getParameterTypes()).
                         isAnnotationPresent(Benchmark.class)) {
-                    System.out.println("Method " + method.getName() + "is started");
+                    System.out.println("Method " + method.getName() + " is started");
                     long startTime = System.nanoTime();
                     Object result = method.invoke(o, args);
-                    System.out.println("Method " + method.getName() + "is finished");
+                    System.out.println("Method " + method.getName() + " is finished");
                     System.out.println("Total time: "
                             + (System.nanoTime() - startTime) + " nanosecconds");
                     return result;

@@ -1,12 +1,13 @@
-package com.preproduction.delivery.service;
+package com.preproduction.delivery.service.pizza;
 
 import com.preproduction.delivery.domain.Pizza;
-import com.preproduction.delivery.repository.PizzaRepository;
+import com.preproduction.delivery.repository.pizza.PizzaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
- * Created by Mantixop on 1/21/16.
+ *
+ * @author Irbis
  */
 @Service
 public class SimplePizzaService implements PizzaService {

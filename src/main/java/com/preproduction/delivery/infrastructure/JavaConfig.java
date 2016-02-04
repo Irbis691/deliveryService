@@ -1,15 +1,16 @@
 package com.preproduction.delivery.infrastructure;
 
-import com.preproduction.delivery.repository.InMemPizzaRepository;
-import com.preproduction.delivery.repository.InMemOrderRepository;
-import com.preproduction.delivery.service.SimpleOrderService;
-import com.preproduction.delivery.service.SimplePizzaService;
+import com.preproduction.delivery.repository.pizza.InMemPizzaRepository;
+import com.preproduction.delivery.repository.order.InMemOrderRepository;
+import com.preproduction.delivery.service.order.SimpleOrderService;
+import com.preproduction.delivery.service.pizza.SimplePizzaService;
 
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by Mantixop on 1/22/16.
+ *
+ * @author Irbis
  */
 public class JavaConfig implements Config {
     private Map<String,Class<?>> ifc2Class = new HashMap<String, Class<?>>();

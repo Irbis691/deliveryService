@@ -1,7 +1,8 @@
 package com.preproduction.delivery.infrastructure;
 
 /**
- * Created by Mantixop on 1/22/16.
+ *
+ * @author Irbis
  */
 public interface Config {
     public <T> Class<T> getImpl(String ifc);

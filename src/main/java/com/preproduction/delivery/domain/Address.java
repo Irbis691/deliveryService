@@ -10,18 +10,28 @@ package com.preproduction.delivery.domain;
  * @author Irbis
  */
 public class Address {
+    private Integer id;
     private String street;
     private int houseNum;
     private int flatNum;
 
     public Address() {
-    }        
+    }
 
-    public Address(String street, int houseNum, int flatNum) {
+    public Address(Integer id, String street, int houseNum, int flatNum) {
+        this.id = id;
         this.street = street;
         this.houseNum = houseNum;
         this.flatNum = flatNum;
     }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }    
 
     public String getStreet() {
         return street;

@@ -1,17 +1,14 @@
 package com.preproduction.delivery;
 
-import com.preproduction.delivery.domain.Address;
-import com.preproduction.delivery.domain.Customer;
-import com.preproduction.delivery.domain.Order;
 import com.preproduction.delivery.infrastructure.ApplicationContext;
 import com.preproduction.delivery.infrastructure.JavaConfig;
 import com.preproduction.delivery.infrastructure.JavaConfigApplicationContext;
-import com.preproduction.delivery.service.OrderService;
+import com.preproduction.delivery.service.order.OrderService;
 
 /**
- * Created by Mantixop on 1/21/16.
+ *
+ * @author Irbis
  */
-
 public class DeliveryApp {
     
     public static int recFact(int n) {

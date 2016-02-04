@@ -1,10 +1,11 @@
-package com.preproduction.delivery.service;
+package com.preproduction.delivery.service.customer;
 
 import com.preproduction.delivery.domain.Customer;
 import org.springframework.stereotype.Service;
 
 /**
- * Created by Irbis on 29.01.2016.
+ *
+ * @author Irbis
  */
 @Service
 public class SimpleCustomerService {

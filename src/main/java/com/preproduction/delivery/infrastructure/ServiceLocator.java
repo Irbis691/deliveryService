@@ -1,7 +1,8 @@
 package com.preproduction.delivery.infrastructure;
 
 /**
- * Created by Mantixop on 1/22/16.
+ *
+ * @author Irbis
  */
 public class ServiceLocator {
     private static Config config;

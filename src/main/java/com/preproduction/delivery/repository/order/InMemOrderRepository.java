@@ -1,4 +1,4 @@
-package com.preproduction.delivery.repository;
+package com.preproduction.delivery.repository.order;
 
 import com.preproduction.delivery.domain.Order;
 
@@ -7,7 +7,8 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 /**
- * Created by Mantixop on 1/21/16.
+ *
+ * @author Irbis
  */
 @Repository
 public class InMemOrderRepository implements OrderRepository {

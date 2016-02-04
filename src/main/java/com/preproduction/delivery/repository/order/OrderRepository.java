@@ -1,9 +1,10 @@
-package com.preproduction.delivery.repository;
+package com.preproduction.delivery.repository.order;
 
 import com.preproduction.delivery.domain.Order;
 
 /**
- * Created by Mantixop on 1/21/16.
+ *
+ * @author Irbis
  */
 public interface OrderRepository {
     Order save(Order order);

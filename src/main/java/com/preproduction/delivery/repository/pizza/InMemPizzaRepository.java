@@ -1,27 +1,31 @@
-package com.preproduction.delivery.repository;
+package com.preproduction.delivery.repository.pizza;
 
 import com.preproduction.delivery.domain.Pizza;
 
 import java.util.Map;
 import com.preproduction.delivery.infrastructure.Benchmark;
-import com.preproduction.delivery.infrastructure.PostCreate;
-import org.springframework.beans.factory.annotation.Qualifier;
+import java.util.HashMap;
+import javax.annotation.PostConstruct;
 import org.springframework.stereotype.Repository;
 
 /**
- * Created by Mantixop on 1/21/16.
+ *
+ * @author Irbis
  */
 @Repository
-//@Qualifier()
 public class InMemPizzaRepository implements PizzaRepository {
 
     private Map<Integer, Pizza> pizzasDB;
 
-    @PostCreate
+    public InMemPizzaRepository() {
+        this.pizzasDB = new HashMap<Integer, Pizza>();
+    }        
+
+    @PostConstruct
     public void init() {
-        pizzasDB.put(1, new Pizza(1, "Sea", 10, Pizza.PizzaType.Meat));
+        pizzasDB.put(1, new Pizza(1, "Sea", 10, Pizza.PizzaType.Sea));
         pizzasDB.put(2, new Pizza(2, "Meat", 20, Pizza.PizzaType.Meat));
-        pizzasDB.put(3, new Pizza(3, "Veg", 30, Pizza.PizzaType.Meat));
+        pizzasDB.put(3, new Pizza(3, "Vegetarian", 30, Pizza.PizzaType.Vegetarian));
     }
 
     public Map<Integer, Pizza> getPizzasDB() {

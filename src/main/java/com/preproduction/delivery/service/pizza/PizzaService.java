@@ -1,9 +1,10 @@
-package com.preproduction.delivery.service;
+package com.preproduction.delivery.service.pizza;
 
 import com.preproduction.delivery.domain.Pizza;
 
 /**
- * Created by Mantixop on 1/21/16.
+ *
+ * @author Irbis
  */
 public interface PizzaService {
     Pizza find(Integer id);
