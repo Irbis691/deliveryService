@@ -9,4 +9,5 @@ import com.preproduction.delivery.domain.Pizza;
 public interface PizzaRepository {    
     
     Pizza findById(Integer id);
+    Pizza save(Pizza pizza);
 }

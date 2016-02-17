@@ -8,10 +8,14 @@ import org.springframework.stereotype.Service;
  * @author Irbis
  */
 @Service
-public class SimpleCustomerService {
+public class SimpleCustomerService implements CustomerService{
 
     public Customer createCustomer() {
         return new Customer();
+    }
+
+    public Customer saveCustomer(Customer customer) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

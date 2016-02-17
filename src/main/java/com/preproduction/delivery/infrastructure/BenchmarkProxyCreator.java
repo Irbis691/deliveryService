@@ -26,7 +26,15 @@ public class BenchmarkProxyCreator {
 
     private Object getProxy(final Object o) {
 
-        final Class<?> type = o.getClass();
+        boolean flag = false;
+        for (Class<?> c : o.getClass().getInterfaces()) {
+            if (c.getName().equals("org.springframework.cglib.proxy.Factory")) {
+                flag = true;
+                break;
+            }
+        }
+       
+        final Class<?> type = flag ? o.getClass().getSuperclass() : o.getClass();
 
         return Proxy.newProxyInstance(type.getClassLoader(), type.getInterfaces(),
                 new InvocationHandler() {

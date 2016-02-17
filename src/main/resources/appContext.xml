@@ -17,9 +17,9 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
  
     <!--<bean name="order" class="com.preproduction.delivery.domain.Order" scope="prototype" />-->    
     
-    <!--<bean id = "simpleOrderService" class="com.preproduction.delivery.service.SimpleOrderService" />-->
+    <bean id = "simpleOrderService" class="com.preproduction.delivery.service.order.SimpleOrderService">
         <!--<lookup-method name="createNewOrder" bean="order"/>-->
-    <!--</bean>-->
+    </bean>
 
     <!--<bean id = "pizzaService" class="com.preproduction.delivery.service.SimplePizzaService" />-->            
 

@@ -90,4 +90,8 @@ public /*abstract*/ class SimpleOrderService implements OrderService {
 //        this.appContext = ac;
 //    }
 
+    public Order placeNewOrder(int customerId, Integer... pizzasID) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }

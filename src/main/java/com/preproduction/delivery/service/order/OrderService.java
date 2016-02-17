@@ -9,4 +9,5 @@ import com.preproduction.delivery.domain.Order;
  */
 public interface OrderService {
     public Order placeNewOrder(Customer customer, Integer ... pizzasID);
+    public Order placeNewOrder(int customerId, Integer ... pizzasID);
 }

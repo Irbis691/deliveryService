@@ -9,6 +9,8 @@ import com.preproduction.delivery.domain.Address;
 import com.preproduction.delivery.domain.BonusCard;
 import com.preproduction.delivery.domain.Customer;
 import com.preproduction.delivery.domain.Order;
+import com.preproduction.delivery.domain.Pizza;
+import com.preproduction.delivery.repository.pizza.PizzaRepository;
 import com.preproduction.delivery.service.order.OrderService;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -21,7 +23,11 @@ public class SpringDeliveryApp {
     
     public static void main(String[] args) {
         
-        ConfigurableApplicationContext repositoryContext = new ClassPathXmlApplicationContext("repoContext.xml");
+        Pizza pizza = new Pizza();
+        pizza.setName("pizza1");
+        ConfigurableApplicationContext repositoryContext = new ClassPathXmlApplicationContext("repoContext.xml");       
+        PizzaRepository pizzaRepository = repositoryContext.getBean(PizzaRepository.class);
+        pizzaRepository.save(pizza);
         
         ConfigurableApplicationContext applicationContext = new ClassPathXmlApplicationContext(new String[]{"appContext.xml"}, repositoryContext);                
 

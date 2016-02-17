@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
  *
  * @author Irbis
  */
-@Repository
+//@Repository
 public class InMemPizzaRepository implements PizzaRepository {
 
     private Map<Integer, Pizza> pizzasDB;
@@ -39,5 +39,9 @@ public class InMemPizzaRepository implements PizzaRepository {
     @Benchmark
     public Pizza findById(Integer id) {
         return pizzasDB.get(id);
+    }
+
+    public Pizza save(Pizza pizza) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
