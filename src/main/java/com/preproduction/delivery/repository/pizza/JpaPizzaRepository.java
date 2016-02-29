@@ -6,6 +6,7 @@
 package com.preproduction.delivery.repository.pizza;
 
 import com.preproduction.delivery.domain.Pizza;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
@@ -30,11 +31,16 @@ public class JpaPizzaRepository implements PizzaRepository{
     @Override
     @Transactional
     public Pizza save(Pizza pizza) {
-        if(pizza.getId() == null) {            
+        if(pizza.getId() == null) {
             em.persist(pizza);
         } else {
             em.merge(pizza);
         }
         return pizza;
+    }
+    
+    @Override
+    public List<Pizza> findAll() {
+        return em.createQuery("from Pizza", Pizza.class).getResultList();   
     }
 }

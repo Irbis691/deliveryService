@@ -5,6 +5,7 @@ import com.preproduction.delivery.domain.Pizza;
 import java.util.Map;
 import com.preproduction.delivery.infrastructure.Benchmark;
 import java.util.HashMap;
+import java.util.List;
 import javax.annotation.PostConstruct;
 import org.springframework.stereotype.Repository;
 
@@ -42,6 +43,11 @@ public class InMemPizzaRepository implements PizzaRepository {
     }
 
     public Pizza save(Pizza pizza) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<Pizza> findAll() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

@@ -29,8 +29,8 @@ public class Pizza {
     @Enumerated(EnumType.STRING)
     private PizzaType pizzaType;  
 
-    @Version
-    private Long  version;
+//    @Version
+//    private Long  version;
     
     public Pizza() {        
     }        
@@ -64,15 +64,19 @@ public class Pizza {
 
     public void setPrice(Integer price) {
         this.price = price;
-    }
-
+    }   
+    
     public enum PizzaType {
         Vegetarian, Sea, Meat, Americana, Hawaiian
     }
 
     public PizzaType getPizzaType() {
         return pizzaType;
-    }        
+    }
+    
+    public void setPizzaType(PizzaType pizzaType) {
+        this.pizzaType = pizzaType;
+    }
 
     @Override
     public String toString() {
