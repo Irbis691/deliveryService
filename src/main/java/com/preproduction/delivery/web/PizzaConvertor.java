@@ -9,8 +9,6 @@ import com.preproduction.delivery.domain.Pizza;
 import com.preproduction.delivery.service.pizza.PizzaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 
 /**
  *
@@ -22,7 +20,7 @@ public class PizzaConvertor implements Converter<String, Pizza> {
     PizzaService pizzaService;
 
     @Override
-    public Pizza convert(String pizzaId) {        
+    public Pizza convert(String pizzaId) {
         Pizza pizza;
         if ((pizzaId == null) || pizzaId.isEmpty()) {
             pizza = new Pizza();

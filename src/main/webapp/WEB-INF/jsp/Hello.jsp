@@ -1,7 +1,7 @@
 <%-- 
     Document   : Hello
     Created on : Feb 23, 2016, 6:02:07 PM
-    Author     : andrii
+    Author     : Irbis
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>

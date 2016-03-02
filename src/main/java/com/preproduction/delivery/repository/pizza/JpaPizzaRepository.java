@@ -6,6 +6,7 @@
 package com.preproduction.delivery.repository.pizza;
 
 import com.preproduction.delivery.domain.Pizza;
+import java.util.Collections;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -17,7 +18,8 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Irbis
  */
 @Repository
-public class JpaPizzaRepository implements PizzaRepository{
+@Transactional
+public class JpaPizzaRepository implements PizzaRepository {
     
     @PersistenceContext
     private EntityManager em;
@@ -28,8 +30,7 @@ public class JpaPizzaRepository implements PizzaRepository{
         return em.find(Pizza.class, id);
     }
     
-    @Override
-    @Transactional
+    @Override    
     public Pizza save(Pizza pizza) {
         if(pizza.getId() == null) {
             em.persist(pizza);
@@ -40,7 +41,17 @@ public class JpaPizzaRepository implements PizzaRepository{
     }
     
     @Override
+    @Transactional(readOnly = true)
     public List<Pizza> findAll() {
-        return em.createQuery("from Pizza", Pizza.class).getResultList();   
+        List<Pizza> pizzas = em.createQuery("from Pizza", Pizza.class).getResultList();
+        Collections.sort(pizzas);
+        return pizzas;
     }
+
+    @Override    
+    public void delete(Pizza pizza) {
+        Pizza p = em.merge(pizza);
+        em.remove(p);
+    }
+    
 }

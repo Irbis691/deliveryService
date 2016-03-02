@@ -10,5 +10,6 @@ import java.util.List;
 public interface PizzaService {
     Pizza find(Integer id);
     Pizza save(Pizza pizza);
-    public List<Pizza> findAll();
+    List<Pizza> findAll();
+    void delete(Pizza pizza);
 }

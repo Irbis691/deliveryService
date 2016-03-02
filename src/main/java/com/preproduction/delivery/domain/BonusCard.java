@@ -5,18 +5,37 @@
  */
 package com.preproduction.delivery.domain;
 
+import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 /**
  *
  * @author Irbis
  */
-public class BonusCard {
+@Entity
+@Table(name = "bonus_card")
+public class BonusCard implements Serializable {
     
     private static final Double BONUS_PERCENT = 0.1;
     
-    private Integer id;    
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)    
+    @Column(name = "card_id")
+    private Integer id;
+    @Column(name = "bonus_size")
     private Integer bonusSize;
 
     public BonusCard() {
+    }
+
+    public BonusCard(Integer id, Integer bonusSize) {
+        this.id = id;        
+        this.bonusSize = bonusSize;
     }        
     
     public Integer getId() {
@@ -34,11 +53,10 @@ public class BonusCard {
     public void increaseBonusSize(Integer bonusSize) {
         this.bonusSize += bonusSize;
     }
-    
 
     @Override
     public String toString() {
-        return "BonusCard{" + "id=" + id + ", bonusSize=" + bonusSize + '}';
-    }
+        return "BonusCard{" + "id=" + id + ", bonusSize=" + getBonusSize() + '}';
+    }    
         
 }

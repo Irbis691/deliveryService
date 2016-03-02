@@ -2,12 +2,9 @@ package com.preproduction.delivery.web;
 
 import com.preproduction.delivery.domain.Pizza;
 import com.preproduction.delivery.service.pizza.PizzaService;
-import java.beans.PropertyEditorSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -17,7 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  *
- * @author andrii
+ * @author Irbis
  */
 @Controller
 public class PizzaController {
@@ -38,26 +35,32 @@ public class PizzaController {
         return pizza.toString();
     }
     
-    @RequestMapping(value = "/create", method = RequestMethod.GET)
-    public String create() {
+    @RequestMapping(value ={"/create", "/edit"}, method = RequestMethod.POST)
+    public String createAndEdit(Model model) {
+        model.addAttribute("pizzaType", Pizza.PizzaType.values());
         return "newpizza";
     }
     
+    @RequestMapping(value = "/delete", method = RequestMethod.GET)
+    public String delete(@ModelAttribute Pizza pizza) {
+        pizzaService.delete(pizza);
+        return "redirect:pizzas";
+    }
+    
     @RequestMapping(value = "/addnew", method = RequestMethod.POST)
-    public String add(@ModelAttribute Pizza pizza) {        
+    public String add(@ModelAttribute Pizza pizza) {
         pizzaService.save(pizza);
         return "redirect:pizzas";
     }
     
-    @RequestMapping(value = "/edit", method = RequestMethod.POST)
-    public String edit() {
-        return "newpizza";
-    }
+//    @RequestMapping(value = "/edit", method = RequestMethod.POST)
+//    public String edit() {
+//        return "newpizza";
+//    }
     
     @ModelAttribute("pizza")
     public Pizza findPizza(@RequestParam(value = "pizzaId", required = false)
             Pizza pizza) {
-        System.out.println("Find: " + pizza);
         return pizza;
     }
     

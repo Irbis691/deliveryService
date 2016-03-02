@@ -5,14 +5,32 @@
  */
 package com.preproduction.delivery.domain;
 
+import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
 /**
  *
  * @author Irbis
  */
-public class Address {
+@Entity
+@Table(name = "address")
+public class Address implements Serializable {
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "address_id")
     private Integer id;
+    @Column(name = "street")
     private String street;
+    @Column(name = "house_number")
     private int houseNum;
+    @Column(name = "flat_number")
     private int flatNum;
 
     public Address() {
@@ -22,8 +40,8 @@ public class Address {
         this.id = id;
         this.street = street;
         this.houseNum = houseNum;
-        this.flatNum = flatNum;
-    }
+        this.flatNum = flatNum;        
+    }        
 
     public Integer getId() {
         return id;
@@ -59,8 +77,8 @@ public class Address {
 
     @Override
     public String toString() {
-        return "Address{" + "street=" + street + ", houseNum=" + houseNum +
-                ", flatNum=" + flatNum + '}';
-    }        
+        return "Address{" + "id=" + id + ", street=" + street + ", houseNum=" +
+                houseNum + ", flatNum=" + flatNum + '}';
+    }    
     
 }

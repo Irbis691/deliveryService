@@ -1,7 +1,20 @@
 package com.preproduction.delivery.domain;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import org.springframework.stereotype.Component;
 
 /**
@@ -9,13 +22,26 @@ import org.springframework.stereotype.Component;
  * @author Irbis
  */
 @Component
-public class Order {
+@Entity
+@Table(name = "orders")
+public class Order implements Serializable {
     
     private static final int MAX_ORDER_SIZE = 10;
 
-    private Integer id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "order_id")
+    private Integer id;    
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
     private Customer customer;
+    @ManyToMany
+    @JoinTable(name = "order_pizzas",
+            joinColumns = { @JoinColumn(name = "order_id")},
+            inverseJoinColumns = {@JoinColumn(name = "pizza_id")})
     private List<Pizza> pizzas;
+    @Column(name = "status")
+    @Enumerated(EnumType.STRING)
     private OrderStatus OrderStatus;
 
     public Order() {
@@ -80,6 +106,10 @@ public class Order {
 
     @Override
     public String toString() {
+        StringBuilder str = new StringBuilder("");
+        for(Pizza p: pizzas) {
+            str.append(p.toString());
+        }
         return "Order{" + "id=" + id + ", customer=" + customer
                 + ", pizzas=" + pizzas + ", OrderStatus=" + OrderStatus + '}';
     }

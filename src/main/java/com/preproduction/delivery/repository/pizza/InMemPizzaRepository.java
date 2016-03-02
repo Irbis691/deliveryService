@@ -21,13 +21,13 @@ public class InMemPizzaRepository implements PizzaRepository {
     public InMemPizzaRepository() {
         this.pizzasDB = new HashMap<Integer, Pizza>();
     }        
-
-    @PostConstruct
-    public void init() {
-        pizzasDB.put(1, new Pizza(1, "Sea", 10, Pizza.PizzaType.Sea));
-        pizzasDB.put(2, new Pizza(2, "Meat", 20, Pizza.PizzaType.Meat));
-        pizzasDB.put(3, new Pizza(3, "Vegetarian", 30, Pizza.PizzaType.Vegetarian));
-    }
+//
+//    @PostConstruct
+//    public void init() {
+//        pizzasDB.put(1, new Pizza(1, 10, Pizza.PizzaType.Sea));
+//        pizzasDB.put(2, new Pizza(2, 20, Pizza.PizzaType.Meat));
+//        pizzasDB.put(3, new Pizza(3, 30, Pizza.PizzaType.Vegetarian));
+//    }
 
     public Map<Integer, Pizza> getPizzasDB() {
         return pizzasDB;
@@ -48,6 +48,11 @@ public class InMemPizzaRepository implements PizzaRepository {
 
     @Override
     public List<Pizza> findAll() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void delete(Pizza pizza) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

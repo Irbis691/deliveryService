@@ -9,7 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 /**
  *
- * @author andrii
+ * @author Irbis
  */
 @Controller
 @SessionAttributes("name")

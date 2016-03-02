@@ -24,7 +24,7 @@ public class SpringDeliveryApp {
     public static void main(String[] args) {
         
         Pizza pizza = new Pizza();
-        pizza.setName("pizza1");
+//        pizza.setName("pizza1");
         ConfigurableApplicationContext repositoryContext = new ClassPathXmlApplicationContext("repoContext.xml");       
         PizzaRepository pizzaRepository = repositoryContext.getBean(PizzaRepository.class);
         pizzaRepository.save(pizza);
@@ -36,11 +36,11 @@ public class SpringDeliveryApp {
         }        
         
         OrderService orderService = applicationContext.getBean("simpleOrderService", OrderService.class);
-        Order order = orderService.placeNewOrder(new Customer(1, "Customer",
-                new Address(1, "Vyhurovsky blvd.", 33, 33), new BonusCard()),
-                1, 2, 3);
+//        Order order = orderService.placeNewOrder(new Customer(1, "Customer",
+//                new Address(1, "Vyhurovsky blvd.", 33, 33), new BonusCard()),
+//                1, 2, 3);
 
-        System.out.println(order);
+//        System.out.println(order);
         
         applicationContext.close();
         repositoryContext.close();

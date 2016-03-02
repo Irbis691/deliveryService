@@ -3,14 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.preproduction.delivery.service.customer;
+package com.preproduction.delivery.repository.customer;
 
 import com.preproduction.delivery.domain.Customer;
+import com.preproduction.delivery.repository.GenericRepository;
 
 /**
  *
  * @author Irbis
  */
-public interface CustomerService {    
-    Customer saveCustomer(Customer customer);    
+public interface CustomerRepository extends GenericRepository<Customer>{
+    
 }

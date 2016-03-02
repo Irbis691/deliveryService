@@ -3,14 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.preproduction.delivery.service.customer;
+package com.preproduction.delivery.repository;
 
-import com.preproduction.delivery.domain.Customer;
+import java.util.List;
 
 /**
  *
  * @author Irbis
  */
-public interface CustomerService {    
-    Customer saveCustomer(Customer customer);    
+public interface GenericRepository<T> {
+    T findById(Integer id);
+    T save(T entity);
+    List<T> findAll();
+    void delete(T entity);
 }
