@@ -11,7 +11,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
@@ -23,25 +22,25 @@ import javax.persistence.Table;
 public class Address implements Serializable {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)    
     @Column(name = "address_id")
     private Integer id;
     @Column(name = "street")
     private String street;
     @Column(name = "house_number")
-    private int houseNum;
+    private Integer houseNumber;
     @Column(name = "flat_number")
-    private int flatNum;
+    private Integer flatNumber;
 
     public Address() {
     }
 
-    public Address(Integer id, String street, int houseNum, int flatNum) {
+    public Address(Integer id, String street, Integer houseNumber, Integer flatNumber) {
         this.id = id;
         this.street = street;
-        this.houseNum = houseNum;
-        this.flatNum = flatNum;        
-    }        
+        this.houseNumber = houseNumber;
+        this.flatNumber = flatNumber;
+    }
 
     public Integer getId() {
         return id;
@@ -49,7 +48,7 @@ public class Address implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
-    }    
+    }
 
     public String getStreet() {
         return street;
@@ -59,26 +58,27 @@ public class Address implements Serializable {
         this.street = street;
     }
 
-    public int getHouseNum() {
-        return houseNum;
+    public Integer getHouseNumber() {
+        return houseNumber;
     }
 
-    public void setHouseNum(int houseNum) {
-        this.houseNum = houseNum;
+    public void setHouseNumber(Integer houseNumber) {
+        this.houseNumber = houseNumber;
     }
 
-    public int getFlatNum() {
-        return flatNum;
+    public Integer getFlatNumber() {
+        return flatNumber;
     }
 
-    public void setFlatNum(int flatNum) {
-        this.flatNum = flatNum;
+    public void setFlatNumber(Integer flatNumber) {
+        this.flatNumber = flatNumber;
     }
 
     @Override
     public String toString() {
-        return "Address{" + "id=" + id + ", street=" + street + ", houseNum=" +
-                houseNum + ", flatNum=" + flatNum + '}';
-    }    
+        return "Address{" + "id=" + id + ", street=" + street +
+                ", houseNumber=" + houseNumber +
+                ", flatNumber=" + flatNumber + '}';
+    }
     
 }

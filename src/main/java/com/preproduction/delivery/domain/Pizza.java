@@ -24,9 +24,9 @@ public class Pizza implements Comparable<Pizza>, Serializable{
     private Integer id;
     @Column(name = "name")
     private String name;
-    @Column(name = "pizza_price")
+    @Column(name = "price")
     private Integer price;
-    @Column(name = "pizza_type")
+    @Column(name = "type")
     @Enumerated(EnumType.STRING)
     private PizzaType pizzaType;
     

@@ -27,7 +27,7 @@ public class SpringDeliveryApp {
 //        pizza.setName("pizza1");
         ConfigurableApplicationContext repositoryContext = new ClassPathXmlApplicationContext("repoContext.xml");       
         PizzaRepository pizzaRepository = repositoryContext.getBean(PizzaRepository.class);
-        pizzaRepository.save(pizza);
+        pizzaRepository.saveOrUpdate(pizza);
         
         ConfigurableApplicationContext applicationContext = new ClassPathXmlApplicationContext(new String[]{"appContext.xml"}, repositoryContext);                
 

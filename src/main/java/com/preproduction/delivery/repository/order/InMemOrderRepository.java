@@ -15,7 +15,7 @@ public class InMemOrderRepository implements OrderRepository {
 
     private final List<Order> orders = new ArrayList<Order>();
 
-    public Order save(Order order) {
+    public Order saveOrUpdate(Order order) {
         setOrderId(order);
         orders.add(order);
         return order;

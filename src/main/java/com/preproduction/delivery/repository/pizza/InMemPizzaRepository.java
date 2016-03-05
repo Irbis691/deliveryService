@@ -42,7 +42,7 @@ public class InMemPizzaRepository implements PizzaRepository {
         return pizzasDB.get(id);
     }
 
-    public Pizza save(Pizza pizza) {
+    public Pizza saveOrUpdate(Pizza pizza) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

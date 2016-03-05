@@ -1,15 +1,16 @@
 package com.preproduction.delivery.domain;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -21,36 +22,41 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 @Entity
 @Table(name = "customers")
+@NamedQueries({
+    @NamedQuery(name = "Customer.findByAccountMail", query = "SELECT c FROM Customer c, Account a WHERE c.account = a.id AND a.mail = :mail")
+})
 public class Customer implements Serializable {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "customer_id")
-    Integer id;
-    @Autowired
-    @OneToOne(orphanRemoval = true)
+    private Integer id;
+    @Autowired        
+    @OneToOne(orphanRemoval = true, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "account_id")
-    Account account;
+    private Account account;
     @Autowired
     @OneToOne(orphanRemoval = true)
     @JoinColumn(name = "card_id")
     private BonusCard bonusCard;
     @OneToMany(mappedBy = "customer")
-    private List<Order> orders = new ArrayList<>();
+    private List<Order> orders;
     @Autowired
     @OneToOne(orphanRemoval = true)
     @JoinColumn(name = "address_id")
     private Address address;
 
     public Customer() {
-    }
+    }        
 
-    public Customer(Integer id, Account account, BonusCard bonusCard, Address address) {
+    public Customer(Integer id, Account account, BonusCard bonusCard,
+            List<Order> orders, Address address) {
         this.id = id;
         this.account = account;
         this.bonusCard = bonusCard;
+        this.orders = orders;
         this.address = address;
-    }        
+    }
 
     public Integer getId() {
         return id;

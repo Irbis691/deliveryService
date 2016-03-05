@@ -28,8 +28,8 @@ public class SimplePizzaService implements PizzaService {
     
     @Override    
 //    @Secured("ROLE_ADMIN")
-    public Pizza save(Pizza pizza) {
-        return pizzaRepository.save(pizza);
+    public Pizza saveOrUpdate(Pizza pizza) {
+        return pizzaRepository.saveOrUpdate(pizza);
     }
     
     @Override    

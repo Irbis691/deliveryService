@@ -8,38 +8,8 @@
 http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
     <!--<context:annotation-config />-->
-    <context:component-scan base-package="com.preproduction.delivery.service, com.preproduction.delivery.domain" >
-        <!--<context:include-filter type="regex" expression=".*Component" />-->
-        <!--<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Component" />-->
-    </context:component-scan>
-    
-    <bean class="com.preproduction.delivery.infrastructure.BenchmarkBeanPostProcessor" />
- 
-    <!--<bean name="order" class="com.preproduction.delivery.domain.Order" scope="prototype" />-->    
-    
-    <bean id = "simpleOrderService" class="com.preproduction.delivery.service.order.SimpleOrderService">
-        <!--<lookup-method name="createNewOrder" bean="order"/>-->
-    </bean>
-
-    <!--<bean id = "pizzaService" class="com.preproduction.delivery.service.SimplePizzaService" />-->            
-
-    <!--<bean id="customerService" class="com.preproduction.delivery.service.SimpleCustomerService" />-->
-
-    <!--<bean name="customer" factory-bean="customerService" factory-method="createCustomer" />-->
-
-<!--    <bean name="qwe" class="com.preproduction.delivery.domain.Address">
-        <constructor-arg name="street" value="qwe"/> 
-        <constructor-arg name="houseNum" value="1"/>
-        <constructor-arg name="flatNum" value="2"/>
-    </bean>-->
-    
-<!--    <bean name="newCustomer" class="com.preproduction.delivery.domain.Customer">
-        <property name="name" value="Illia" />
-        <constructor-arg name="id" value="1" />
-        <constructor-arg name="name" value="Illia" />
-        <constructor-arg ref="qwe"/>
-    </bean>-->
-    
-    <!--<bean class="com.preproduction.delivery.infrastructure.CustomBeanFactoryPostprocessor" />-->
+    <context:component-scan base-package="com.preproduction.delivery.service,
+                                          com.preproduction.delivery.domain,
+                                          com.preproduction.delivery.validator" />
 
 </beans>

@@ -79,7 +79,7 @@ public /*abstract*/ class SimpleOrderService implements OrderService {
     }   
 
     private void saveOrder(Order newOrder) {
-        orderRepository.save(newOrder);
+        orderRepository.saveOrUpdate(newOrder);
     }
 
     private Pizza getPizzaByID(Integer id) {

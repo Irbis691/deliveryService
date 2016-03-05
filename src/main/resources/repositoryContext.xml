@@ -4,8 +4,7 @@
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:p="http://www.springframework.org/schema/p"
        xmlns:c="http://www.springframework.org/schema/c"
-       xmlns:tx="http://www.springframework.org/schema/tx"
-       
+       xmlns:tx="http://www.springframework.org/schema/tx"       
        xsi:schemaLocation="http://www.springframework.org/schema/beans
                            http://www.springframework.org/schema/beans/spring-beans.xsd
                            http://www.springframework.org/schema/context
@@ -17,10 +16,9 @@
     
     <context:component-scan base-package="com.preproduction.delivery.repository" />        
     
-<!--    <jdbc:embedded-database id="dataSource" type="H2">
-    </jdbc:embedded-database>-->
+<!--    <jdbc:embedded-database id="dataSource" type="H2" />
     
-    <!--<context:property-placeholder location="classpath:/jdbc.properties" />-->
+    <context:property-placeholder location="classpath:/jdbc.properties" />-->
     
     <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="location" value="classpath:jdbc.properties" />
@@ -55,45 +53,6 @@
         <property name="entityManagerFactory" ref="entityManagerFactory"/>
     </bean>
     
-    <tx:annotation-driven transaction-manager="transactionManager"/>
-    
-<!--    <bean name="pizzaFactoryBean" class="com.preproduction.delivery.infrastructure.PizzaFactoryBean">
-        <property name="id" value="1" />
-        <property name="name" value="Sea" />
-        <property name="price" value="20" />
-        <property name="type" value="Sea" />
-    </bean> -->
-    
-<!--    <bean id = "pizzaRepo" class = "com.preproduction.delivery.repository.InMemPizzaRepository"
-          init-method="init">
-        <property name="pizzasDB">
-            <map>
-                <entry key="1">
-                    <bean class="com.preproduction.delivery.domain.Pizza">
-                        <constructor-arg value="1"/>
-                        <constructor-arg value="Sea"/>
-                        <constructor-arg value="12" />
-                        <constructor-arg value="Sea"/>
-                    </bean>
-                </entry>
-                <entry key="2">
-                    <bean class="com.preproduction.delivery.domain.Pizza">
-                        <constructor-arg value="2"/>
-                        <constructor-arg value="Meat"/>
-                        <constructor-arg value="13" />
-                        <constructor-arg value="Meat"/>
-                    </bean>
-                </entry>
-                <entry key="3">
-                    <bean class="com.preproduction.delivery.domain.Pizza">
-                        <constructor-arg value="3"/>
-                        <constructor-arg value="Vegetarian"/>
-                        <constructor-arg value="14" />
-                        <constructor-arg value="Vegetarian"/>
-                    </bean>
-                </entry>
-            </map>            
-        </property>
-    </bean>-->   
+    <tx:annotation-driven transaction-manager="transactionManager"/>  
 
 </beans>

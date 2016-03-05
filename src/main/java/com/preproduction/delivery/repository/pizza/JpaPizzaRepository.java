@@ -31,7 +31,7 @@ public class JpaPizzaRepository implements PizzaRepository {
     }
     
     @Override    
-    public Pizza save(Pizza pizza) {
+    public Pizza saveOrUpdate(Pizza pizza) {
         if(pizza.getId() == null) {
             em.persist(pizza);
         } else {

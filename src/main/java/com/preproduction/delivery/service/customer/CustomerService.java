@@ -5,6 +5,7 @@
  */
 package com.preproduction.delivery.service.customer;
 
+import com.preproduction.delivery.domain.Account;
 import com.preproduction.delivery.domain.Customer;
 
 /**
@@ -12,5 +13,10 @@ import com.preproduction.delivery.domain.Customer;
  * @author Irbis
  */
 public interface CustomerService {    
-    Customer saveCustomer(Customer customer);    
+    
+    Customer saveOrUpdate(Customer customer);   
+    Customer findByMail(String login);
+    Customer registerCustomer(Account account);
+    void setLoginFromEmail(Customer customer);
+            
 }

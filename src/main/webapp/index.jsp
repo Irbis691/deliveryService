@@ -1,7 +1,7 @@
 <%-- 
     Document   : newjsp
     Created on : Feb 22, 2016, 3:43:07 PM
-    Author     : andrii
+    Author     : Irbis
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>

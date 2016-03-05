@@ -49,7 +49,7 @@ public class PizzaController {
     
     @RequestMapping(value = "/addnew", method = RequestMethod.POST)
     public String add(@ModelAttribute Pizza pizza) {
-        pizzaService.save(pizza);
+        pizzaService.saveOrUpdate(pizza);
         return "redirect:pizzas";
     }
     

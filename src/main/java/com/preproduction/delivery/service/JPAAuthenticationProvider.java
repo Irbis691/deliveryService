@@ -5,8 +5,10 @@
  */
 package com.preproduction.delivery.service;
 
+import com.preproduction.delivery.service.customer.CustomerService;
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -22,6 +24,9 @@ import org.springframework.stereotype.Component;
  */
 @Component("JPAAuthProvider")
 public class JPAAuthenticationProvider implements AuthenticationProvider {
+    
+    @Autowired
+    CustomerService customerService;
 
     @Override
     public Authentication authenticate(Authentication auth) throws AuthenticationException {

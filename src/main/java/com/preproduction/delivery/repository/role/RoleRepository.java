@@ -3,16 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.preproduction.delivery.repository.customer;
+package com.preproduction.delivery.repository.role;
 
-import com.preproduction.delivery.domain.Customer;
+import com.preproduction.delivery.domain.Role;
 import com.preproduction.delivery.repository.GenericRepository;
 
 /**
  *
  * @author Irbis
  */
-public interface CustomerRepository extends GenericRepository<Customer>{
-    
-    Customer findByAccountMail(String login);
+public interface RoleRepository extends GenericRepository<Role> {
+
+    Role findByName(String name);
 }

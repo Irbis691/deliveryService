@@ -6,15 +6,16 @@ xsi:schemaLocation="http://www.springframework.org/schema/beans
 		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
 		http://www.springframework.org/schema/security
 		http://www.springframework.org/schema/security/spring-security.xsd">
-    <http auto-config="true" use-expressions="false">       
+    <http auto-config="true" use-expressions="false">
         <intercept-url pattern="/**" access="ROLE_USER"/>
-        <logout invalidate-session="true"/>       
+        <logout invalidate-session="true"/>
         <csrf disabled="true" />
+        <!--<form-login login-page="login.jsp" />-->
     </http>
     
-    <global-method-security secured-annotations="enabled" />            
+    <global-method-security secured-annotations="enabled" />
     
-    <authentication-manager>
+    <authentication-manager>        
         <authentication-provider ref="JPAAuthProvider" />                                         
     </authentication-manager>
     
