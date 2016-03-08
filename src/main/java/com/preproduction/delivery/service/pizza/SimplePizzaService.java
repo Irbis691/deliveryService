@@ -26,7 +26,7 @@ public class SimplePizzaService implements PizzaService {
         this.pizzaRepository = pizzaRepository;
     }
     
-    @Override    
+    @Override
 //    @Secured("ROLE_ADMIN")
     public Pizza saveOrUpdate(Pizza pizza) {
         return pizzaRepository.saveOrUpdate(pizza);

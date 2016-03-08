@@ -11,6 +11,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 /**
@@ -19,6 +21,9 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "roles")
+@NamedQueries({
+    @NamedQuery(name = "Role.findByName", query = "SELECT r FROM Role r WHERE r.name = :name")
+})
 public class Role implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

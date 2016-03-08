@@ -25,7 +25,7 @@ public class Pizza implements Comparable<Pizza>, Serializable{
     @Column(name = "name")
     private String name;
     @Column(name = "price")
-    private Integer price;
+    private Double price;
     @Column(name = "type")
     @Enumerated(EnumType.STRING)
     private PizzaType pizzaType;
@@ -33,12 +33,12 @@ public class Pizza implements Comparable<Pizza>, Serializable{
     public Pizza() {        
     }        
 
-    public Pizza(Integer id, String name, Integer price, PizzaType pizzaType) {
+    public Pizza(Integer id, String name, Double price, PizzaType pizzaType) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.pizzaType = pizzaType;
-    }        
+    }
 
     public Integer getId() {
         return id;
@@ -48,11 +48,11 @@ public class Pizza implements Comparable<Pizza>, Serializable{
         this.id = id;
     }
 
-    public Integer getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(Integer price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 

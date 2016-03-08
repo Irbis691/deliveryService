@@ -9,8 +9,10 @@ import com.preproduction.delivery.domain.Role;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 /**
  *
@@ -45,8 +47,11 @@ public class JPARoleRepository implements RoleRepository{
 
     @Override
     @Transactional(readOnly = true)
-    public Role findByName(String name) {
-        return em.find(Role.class, name);
+    public Role findByName(String name) {        
+        TypedQuery<Role> query = em.createNamedQuery("Role.findByName", Role.class);
+        query.setParameter("name", name);
+        List<Role> roles = query.getResultList();
+        return CollectionUtils.isEmpty(roles) ? null : roles.get(0);
     }
     
 }

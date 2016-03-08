@@ -1,13 +1,15 @@
 package com.preproduction.delivery.service.order;
 
-import com.preproduction.delivery.domain.Customer;
 import com.preproduction.delivery.domain.Order;
+import com.preproduction.delivery.domain.Pizza;
 
 /**
  *
  * @author Irbis
  */
 public interface OrderService {
-    public Order placeNewOrder(Customer customer, Integer ... pizzasID);
-    public Order placeNewOrder(int customerId, Integer ... pizzasID);
+
+    void updateOrder(Order order, Pizza pizza);
+    Order placeNewOrder(Order order);
+
 }

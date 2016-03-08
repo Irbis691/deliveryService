@@ -1,8 +1,10 @@
 package com.preproduction.delivery.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -25,34 +27,39 @@ import org.springframework.stereotype.Component;
 @Entity
 @Table(name = "orders")
 public class Order implements Serializable {
-    
+
     private static final int MAX_ORDER_SIZE = 10;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "order_id")
-    private Integer id;    
-    @ManyToOne
+    private Integer id;
+    @ManyToOne(cascade = {CascadeType.MERGE})
     @JoinColumn(name = "customer_id")
     private Customer customer;
     @ManyToMany
     @JoinTable(name = "order_pizzas",
-            joinColumns = { @JoinColumn(name = "order_id")},
-            inverseJoinColumns = {@JoinColumn(name = "pizza_id")})
-    private List<Pizza> pizzas;
+            joinColumns = {
+                @JoinColumn(name = "order_id")},
+            inverseJoinColumns = {
+                @JoinColumn(name = "pizza_id")})
+    private List<Pizza> pizzas = new ArrayList<>();
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
     private OrderStatus OrderStatus;
+    @Column(name = "price")
+    private Double orderPrice;
 
     public Order() {
     }
 
-    public Order(Integer id, Customer customer, List<Pizza> pizzas,
-            OrderStatus orderStatus) {
+    public Order(Integer id, Customer customer, OrderStatus OrderStatus,
+            List<Pizza> pizzas, Double orderPrice) {
         this.id = id;
         this.customer = customer;
         this.pizzas = pizzas;
-        this.OrderStatus = orderStatus;
+        this.OrderStatus = OrderStatus;
+        this.orderPrice = orderPrice;
     }
 
     public Integer getId() {
@@ -87,31 +94,46 @@ public class Order implements Serializable {
         this.OrderStatus = orderType;
     }
 
-    public int getOrderPrice() {
-        int price = 0;
+    public Double getPurePizzasPrice() {
+        Double price = 0d;
         for (Pizza p : pizzas) {
             price += p.getPrice();
         }
         return price;
     }
     
+    public Double getOrderPrice() {
+        return orderPrice;
+    }
+
+    public void setOrderPrice(Double orderPrice) {
+        this.orderPrice = orderPrice;
+    }
+
     public void addPizzas(List<Pizza> newPizzas) {
-        for(Pizza p: newPizzas) {
-            if(this.pizzas.size() >= MAX_ORDER_SIZE) {
+        for (Pizza p : newPizzas) {
+            if (this.pizzas.size() >= MAX_ORDER_SIZE) {
                 break;
             }
             pizzas.add(p);
         }
     }
 
+    public void addPizza(Pizza pizza) {
+//        if (this.pizzas.size() < MAX_ORDER_SIZE) {
+        pizzas.add(pizza);
+//        }
+    }
+
     @Override
     public String toString() {
         StringBuilder str = new StringBuilder("");
-        for(Pizza p: pizzas) {
+        for (Pizza p : pizzas) {
             str.append(p.toString());
         }
-        return "Order{" + "id=" + id + ", customer=" + customer
-                + ", pizzas=" + pizzas + ", OrderStatus=" + OrderStatus + '}';
+        String cust = customer != null ? customer.getId().toString() : null;
+        return "Order{" + "id=" + id + ", customer=" + cust + ", pizzas=" + str +
+                ", OrderStatus=" + OrderStatus + '}';
     }
 
     public enum OrderStatus {
@@ -132,7 +154,7 @@ public class Order implements Serializable {
 
     }
 
-    public void changeOrderStatus(OrderStatus orderStatus) { 
+    public void changeOrderStatus(OrderStatus orderStatus) {
         OrderStatus currStatus = getOrderStatus();
         if (Arrays.asList(currStatus.getValidTransitionStatuses()).contains(orderStatus)) {
             setOrderStatus(orderStatus);

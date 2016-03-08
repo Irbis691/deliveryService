@@ -59,4 +59,12 @@ public class JPACustomerRepository implements CustomerRepository{
         return CollectionUtils.isEmpty(customers) ? null : customers.get(0);
     }
     
+    @Override
+    public Customer findByAccountLogin(String login) {
+        TypedQuery<Customer> query = em.createNamedQuery("Customer.findByAccountLogin", Customer.class);
+        query.setParameter("login", login);
+        List<Customer> customers = query.getResultList();
+        return CollectionUtils.isEmpty(customers) ? null : customers.get(0);
+    }
+    
 }

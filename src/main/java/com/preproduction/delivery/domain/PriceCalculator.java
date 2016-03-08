@@ -6,11 +6,13 @@
 package com.preproduction.delivery.domain;
 
 import java.util.List;
+import org.springframework.stereotype.Component;
 
 /**
  *
  * @author Irbis
  */
+@Component
 public class PriceCalculator {
 
     private static final int ORDER_SIZE_THRESHOLD = 4;
@@ -20,36 +22,36 @@ public class PriceCalculator {
     public PriceCalculator() {
     }
     
-    public Integer calculatePrice(Order order) {
-        int result;
+    public Double calculatePrice(Order order) {        
+        Double result;
         result = calcMostExpensPizzaDisc(order);
         result = calcDiscountFromBonusCard(order, result);
         return result;
     }
     
-    private int calcMostExpensPizzaDisc(Order order) {
+    private Double calcMostExpensPizzaDisc(Order order) {
         List<Pizza> pizzas = order.getPizzas();
         if (pizzas.size() > ORDER_SIZE_THRESHOLD) {
-            int maxPrice = 0;
+            Double maxPrice = 0d;
             for (Pizza p : pizzas) {
-                int pizzaPrice = p.getPrice();
+                Double pizzaPrice = p.getPrice();
                 if(pizzaPrice > maxPrice) {
                     maxPrice = pizzaPrice;
                 }
             }
-            return order.getOrderPrice() - (int)(maxPrice * 
-                    DISCOUNT_FOR_MOST_EXPENSIVE_PIZZA);
+            return order.getPurePizzasPrice() - maxPrice * 
+                    DISCOUNT_FOR_MOST_EXPENSIVE_PIZZA;
         } else {
-            return order.getOrderPrice();
+            return order.getPurePizzasPrice();
         }
     }
     
-    private int calcDiscountFromBonusCard(Order order, int currPrice) {
-        int bonusSize = order.getCustomer().getBonusCard().getBonusSize();
+    private Double calcDiscountFromBonusCard(Order order, Double currPrice) {
+        Double bonusSize = order.getCustomer().getBonusCard().getBonusSize();
         if(bonusSize < currPrice * UPPER_BOUND_FOR_BONUSCARD_DISCOUNT) {
             return currPrice - bonusSize;
         } else {
-            return (int)(currPrice * UPPER_BOUND_FOR_BONUSCARD_DISCOUNT);
+            return currPrice * UPPER_BOUND_FOR_BONUSCARD_DISCOUNT;
         }
     }
     

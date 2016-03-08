@@ -6,7 +6,6 @@
 package com.preproduction.delivery.web;
 
 import com.preproduction.delivery.domain.Account;
-import com.preproduction.delivery.domain.Customer;
 import com.preproduction.delivery.service.customer.CustomerService;
 import com.preproduction.delivery.validator.AccountValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,14 +35,13 @@ public class RegisterController {
     private CustomerService customerService;
 
     @RequestMapping(method = RequestMethod.GET)
-    public ModelAndView viewRegistration(Model model) {
+    public ModelAndView viewRegistration() {
         return new ModelAndView("registration", "account", new Account());
     }
 
     @RequestMapping(method = RequestMethod.POST)
     public String processRegistration(@ModelAttribute("account") @Validated Account account,
             BindingResult result, Model model) {
-
         if (result.hasErrors()) {
             return "registration";
         } else {

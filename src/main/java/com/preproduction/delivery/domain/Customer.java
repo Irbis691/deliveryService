@@ -1,6 +1,7 @@
 package com.preproduction.delivery.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -23,7 +24,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 @Entity
 @Table(name = "customers")
 @NamedQueries({
-    @NamedQuery(name = "Customer.findByAccountMail", query = "SELECT c FROM Customer c, Account a WHERE c.account = a.id AND a.mail = :mail")
+    @NamedQuery(name = "Customer.findByAccountMail", query = "SELECT c FROM Customer c, Account a WHERE c.account = a.id AND a.mail = :mail"),
+    @NamedQuery(name = "Customer.findByAccountLogin", query = "SELECT c FROM Customer c, Account a WHERE c.account = a.id AND a.login = :login")
 })
 public class Customer implements Serializable {
     
@@ -31,18 +33,18 @@ public class Customer implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "customer_id")
     private Integer id;
-    @Autowired        
+    @Autowired
     @OneToOne(orphanRemoval = true, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "account_id")
     private Account account;
     @Autowired
-    @OneToOne(orphanRemoval = true)
+    @OneToOne(orphanRemoval = true, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "card_id")
     private BonusCard bonusCard;
-    @OneToMany(mappedBy = "customer")
-    private List<Order> orders;
+    @OneToMany(mappedBy = "customer", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private List<Order> orders = new ArrayList<>();
     @Autowired
-    @OneToOne(orphanRemoval = true)
+    @OneToOne(orphanRemoval = true, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "address_id")
     private Address address;
 

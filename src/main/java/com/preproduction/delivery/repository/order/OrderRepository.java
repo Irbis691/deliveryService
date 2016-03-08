@@ -7,6 +7,6 @@ import com.preproduction.delivery.repository.GenericRepository;
  *
  * @author Irbis
  */
-public interface OrderRepository extends GenericRepository<Order>{
+public interface OrderRepository extends GenericRepository<Order> {
     
 }

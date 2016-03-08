@@ -4,62 +4,60 @@ import com.preproduction.delivery.domain.Customer;
 import com.preproduction.delivery.domain.Order;
 import com.preproduction.delivery.domain.Pizza;
 import com.preproduction.delivery.domain.PriceCalculator;
-import com.preproduction.delivery.infrastructure.Benchmark;
 import com.preproduction.delivery.repository.order.OrderRepository;
+import com.preproduction.delivery.service.customer.CustomerService;
 import com.preproduction.delivery.service.pizza.PizzaService;
 
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author Irbis
  */
 @Service
-public /*abstract*/ class SimpleOrderService implements OrderService {
+public class SimpleOrderService implements OrderService {
     
     @Autowired
     private OrderRepository orderRepository;
     @Autowired
-    private PizzaService pizzaService;
     private PriceCalculator priceCalculator;
+    @Autowired
+    private CustomerService customerService;
 
     public SimpleOrderService() {
     }
-
     
-    public SimpleOrderService(OrderRepository orderRepository,
-                              PizzaService pizzaService,
-                              PriceCalculator priceCalculator) {
-        this.orderRepository = orderRepository;
-        this.pizzaService = pizzaService;
+    public SimpleOrderService(OrderRepository orderRepository,                              
+                              PriceCalculator priceCalculator,
+                              CustomerService customerService) {
+        this.orderRepository = orderRepository;        
         this.priceCalculator = priceCalculator;
+        this.customerService = customerService;
     }
     
-    @Benchmark
-    public Order placeNewOrder(Customer customer, Integer ... pizzasID) 
-            throws IllegalArgumentException {        
-        List<Pizza> pizzas = getListOfPizzasById(pizzasID);       
-        Order order = new Order(1, customer, pizzas, Order.OrderStatus.NEW);
-//        Order newOrder = createNewOrder();
+    @Override
+    public void updateOrder(Order order, Pizza pizza) {
+        order.addPizza(pizza);
+    }
+        
+    @Override
+    @Transactional
+    public Order placeNewOrder(Order order) {
+        Customer customer = customerService.findByLogin(SecurityContextHolder.
+                getContext().getAuthentication().getName());        
+        order.setCustomer(customer);
+        order.setOrderStatus(Order.OrderStatus.NEW);
+        order.setOrderPrice(getOrderPrice(order));
         saveOrder(order);
         return order;
-    }
+    }     
     
-    public void addMorePizzasToOrder(Order order, Integer ... pizzasID) 
-            throws IllegalArgumentException {        
-        List<Pizza> pizzas = getListOfPizzasById(pizzasID);
-        order.addPizzas(pizzas);        
-    }
-    
-//    abstract Order createNewOrder();
-//        return new Order(customer, pizzas, orderPrice,
-//                Order.OrderStatus.NEW);
-//        return (Order) appContext.getBean("order");
-    
-    public int getOrderPrice(Order order) {
+    public Double getOrderPrice(Order order) {
         return priceCalculator.calculatePrice(order);
     }
     
@@ -69,29 +67,10 @@ public /*abstract*/ class SimpleOrderService implements OrderService {
         }
         order.setOrderStatus(newStatus);
     }
-    
-    private List<Pizza> getListOfPizzasById(Integer[] pizzasID) {
-        List<Pizza> pizzas = new ArrayList<Pizza>();
-        for(Integer id : pizzasID){
-            pizzas.add(getPizzaByID(id));
-        }
-        return pizzas;
-    }   
 
-    private void saveOrder(Order newOrder) {
-        orderRepository.saveOrUpdate(newOrder);
-    }
-
-    private Pizza getPizzaByID(Integer id) {
-        return pizzaService.find(id);
-    }
-
-//    public void setApplicationContext(ApplicationContext ac) throws BeansException {
-//        this.appContext = ac;
-//    }
-
-    public Order placeNewOrder(int customerId, Integer... pizzasID) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    @Transactional
+    private void saveOrder(Order order) {
+        orderRepository.saveOrUpdate(order);
     }
 
 }

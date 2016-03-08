@@ -6,9 +6,12 @@
 package com.preproduction.delivery.domain;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -35,11 +38,11 @@ public class Account implements Serializable {
     private String password;
     @Column(name = "mail")
     private String mail;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE})
     @JoinTable(name = "account_roles",
             joinColumns = {@JoinColumn(name = "account_id")},
             inverseJoinColumns = {@JoinColumn(name = "role_id")})
-    private Set<Role> roles;
+    private Set<Role> roles = new HashSet<>();
 
     public Account() {
     }   

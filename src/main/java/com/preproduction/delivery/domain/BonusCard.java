@@ -28,12 +28,16 @@ public class BonusCard implements Serializable {
     @Column(name = "card_id")
     private Integer id;
     @Column(name = "bonus_size")
-    private Integer bonusSize;
+    private Double bonusSize;
 
     public BonusCard() {
     }
+    
+    public BonusCard(Double bonusSize) {                
+        this.bonusSize = bonusSize;
+    }   
 
-    public BonusCard(Integer id, Integer bonusSize) {
+    public BonusCard(Integer id, Double bonusSize) {
         this.id = id;        
         this.bonusSize = bonusSize;
     }        
@@ -46,11 +50,11 @@ public class BonusCard implements Serializable {
         this.id = id;
     }
 
-    public Integer getBonusSize() {
-        return (int)(bonusSize * BONUS_PERCENT);
+    public Double getBonusSize() {
+        return bonusSize * BONUS_PERCENT;
     }
 
-    public void increaseBonusSize(Integer bonusSize) {
+    public void increaseBonusSize(Double bonusSize) {
         this.bonusSize += bonusSize;
     }
 

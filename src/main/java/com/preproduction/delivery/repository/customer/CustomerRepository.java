@@ -14,5 +14,6 @@ import com.preproduction.delivery.repository.GenericRepository;
  */
 public interface CustomerRepository extends GenericRepository<Customer>{
     
-    Customer findByAccountMail(String login);
+    Customer findByAccountMail(String mail);
+    Customer findByAccountLogin(String login);
 }

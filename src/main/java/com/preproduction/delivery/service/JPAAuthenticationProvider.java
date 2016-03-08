@@ -5,6 +5,8 @@
  */
 package com.preproduction.delivery.service;
 
+import com.preproduction.delivery.domain.Account;
+import com.preproduction.delivery.domain.Role;
 import com.preproduction.delivery.service.customer.CustomerService;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,18 +26,24 @@ import org.springframework.stereotype.Component;
  */
 @Component("JPAAuthProvider")
 public class JPAAuthenticationProvider implements AuthenticationProvider {
-    
+
     @Autowired
     CustomerService customerService;
 
     @Override
     public Authentication authenticate(Authentication auth) throws AuthenticationException {
-        String name = auth.getName();
-        String passwd = auth.getCredentials().toString();
-        if ("bob".equals(name) && "123".equals(passwd)) {
+        String login = auth.getName();
+        String password = auth.getCredentials().toString();
+        Account account = null;
+        if (login != null && !"".equals(login)) {
+            account = customerService.findByLogin(login).getAccount();
+        }
+        if (account != null && account.getPassword().equals(password)) {            
             List<GrantedAuthority> authorities = new ArrayList<>();
-            authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
-            return new UsernamePasswordAuthenticationToken(name, passwd,
+            for (Role r : account.getRoles()) {
+                authorities.add(new SimpleGrantedAuthority("ROLE_" + r.getName()));
+            }
+            return new UsernamePasswordAuthenticationToken(login, password,
                     authorities);
         }
         throw new BadCredentialsException("Bad Credentials");
