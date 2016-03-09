@@ -14,11 +14,11 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title><spring:message code="orders.title" /></title>
+        <title><spring:message code="orders" /></title>
     </head>
     <body>
         <div class="container">
-            <h2><spring:message code="orders.title" /></h2>
+            <h2><spring:message code="orders" /></h2>
             <table class="table table-striped">
                 <thead>
                     <tr>

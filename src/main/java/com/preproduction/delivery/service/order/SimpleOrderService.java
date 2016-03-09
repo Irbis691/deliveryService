@@ -5,7 +5,6 @@ import com.preproduction.delivery.domain.Order;
 import com.preproduction.delivery.domain.Pizza;
 import com.preproduction.delivery.domain.PriceCalculator;
 import com.preproduction.delivery.repository.order.OrderRepository;
-import com.preproduction.delivery.service.customer.CustomerService;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +36,13 @@ public class SimpleOrderService implements OrderService {
     public void addPizzaToOrder(Order order, Pizza pizza) {       
         order.addPizza(pizza);
         order.setOrderPrice(getOrderPrice(order));
-    }        
+    }
+    
+    @Override
+    public void deletePizzaFomrOrder(Order order, Pizza pizza) {        
+        order.deletePizza(pizza);
+        order.setOrderPrice(getOrderPrice(order));
+    }
     
     private Double getOrderPrice(Order order) {
         return priceCalculator.calculatePrice(order);

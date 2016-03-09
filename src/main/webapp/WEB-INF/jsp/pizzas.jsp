@@ -16,10 +16,42 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title><spring:message code="pizzas.title" /></title>
     </head>
-    <body>        
-        <div class="container">            
-            <h2><spring:message code="pizzas.title" /></h2>
-            <h2>Order: ${order.toString()}</h2>
+    <body>
+        <sec:authorize access="hasRole('ROLE_USER')">
+            <div class="container">
+                <h2><spring:message code="pizza.your.order" /></h2>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th><spring:message code="pizzas.name" /></th>
+                            <th><spring:message code="pizza.quantity" /></th>                        
+                            <th><spring:message code="actions" /></th>
+                        </tr>
+                    </thead>
+                    <c:forEach var="orDet" items="${order.pizzas}">
+                        <tr>
+                            <td>${orDet.pizza.name}</td>
+                            <td>${orDet.quantity}</td>
+                            <td>
+                                <form method="post" action="deleteOD" >
+                                    <input type="hidden" name="pizzaId" value="${orDet.pizza.id}" />
+                                    <input class="btn btn-block" type="submit" value="<spring:message code="delete" />" />
+                                    <sec:csrfInput />
+                                </form>
+                            </td>
+                        </tr>
+                    </c:forEach>                    
+                </table>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">
+                        <spring:message code="order.price" />
+                    </label>
+                    <div class="col-sm-10">${order.orderPrice}</div>
+                </div>
+            </div>
+        </sec:authorize>
+        <div class="container">
+            <h2><spring:message code="pizzas.title" /></h2>            
             <table class="table table-striped">
                 <thead>
                     <tr>

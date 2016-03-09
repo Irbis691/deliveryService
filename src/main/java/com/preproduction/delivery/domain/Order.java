@@ -13,7 +13,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -128,7 +127,17 @@ public class Order implements Serializable {
                     return;
                 }
             }
-            pizzas.add(new OrderDetails(pizza, 1));            
+            pizzas.add(new OrderDetails(pizza, 1));
+        }
+    }
+
+    public void deletePizza(Pizza pizza) {
+        for (OrderDetails od : pizzas) {
+            if (od.getPizza().equals(pizza)) {
+                orderSize -= od.getQuantity();
+                pizzas.remove(od);
+                return;
+            }
         }
     }
 

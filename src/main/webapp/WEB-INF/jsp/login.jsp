@@ -23,7 +23,7 @@
                 <form class="form-horizontal" action="login" method="post">                    
                     <div class="form-group">
                         <label class="col-sm-2 control-label"><spring:message code="registration.login" /></label>                    
-                        <div class="col-sm-10">                        
+                        <div class="col-sm-10">
                             <input id="username_or_email" name="username" type="text" class="form-control" placeholder="test"/>
                         </div>
                     </div>

@@ -11,6 +11,7 @@ import java.util.List;
  */
 public interface OrderService {
 
+    void deletePizzaFomrOrder(Order order, Pizza pizza);
     void addPizzaToOrder(Order order, Pizza pizza);
     Order saveOrUpdate(Order order);
     public List<Order> findByCustomer(Customer customer);

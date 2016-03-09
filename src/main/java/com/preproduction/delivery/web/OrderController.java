@@ -56,6 +56,14 @@ public class OrderController {
         return "redirect:pizzas";
     }
 
+    @RequestMapping(value = "/deleteOD", method = RequestMethod.POST)
+    public String deletePizzaFromOrder(@ModelAttribute Pizza pizza,
+            @ModelAttribute Order order) {
+        System.out.println(pizza);
+        orderService.deletePizzaFomrOrder(order, pizza);
+        return "redirect:pizzas";
+    }
+
     @RequestMapping(value = "/orders", method = RequestMethod.GET)
     public String getOrders(Model model) {
         Account account = accountService.findByLogin(SecurityContextHolder.
