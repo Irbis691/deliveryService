@@ -3,9 +3,7 @@ package com.preproduction.delivery.service.customer;
 import com.preproduction.delivery.domain.Account;
 import com.preproduction.delivery.domain.BonusCard;
 import com.preproduction.delivery.domain.Customer;
-import com.preproduction.delivery.domain.Role;
 import com.preproduction.delivery.repository.customer.CustomerRepository;
-import com.preproduction.delivery.repository.role.RoleRepository;
 import com.preproduction.delivery.service.account.AccountService;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +40,7 @@ public class SimpleCustomerService implements CustomerService {
     }   
 
     @Override
+    @Transactional
     public Customer findByAccount(Account account) {
         return customerRepository.findByAccount(account);
     }

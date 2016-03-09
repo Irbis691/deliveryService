@@ -6,7 +6,6 @@
 package com.preproduction.delivery.web;
 
 import com.preproduction.delivery.domain.Account;
-import com.preproduction.delivery.domain.BonusCard;
 import com.preproduction.delivery.domain.Customer;
 import com.preproduction.delivery.service.account.AccountService;
 import com.preproduction.delivery.service.customer.CustomerService;
@@ -21,7 +20,6 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -34,6 +32,9 @@ public class ProfileController {
 
     @Autowired
     AccountService accountService;
+    
+    @Autowired
+    CustomerService customerService;
 
     @Autowired
     AccountValidator accountValidator;
@@ -42,7 +43,10 @@ public class ProfileController {
     public ModelAndView viewProfile() {
         Account account = accountService.findByLogin(SecurityContextHolder.
                 getContext().getAuthentication().getName());
-        return new ModelAndView("profile", "account", account);
+        ModelAndView modelAndView = new ModelAndView("profile", "account", account);
+        Customer customer = customerService.findByAccount(account);       
+        modelAndView.addObject("bonus", customer.getBonusCard().getBonusSize());
+        return modelAndView;
     }
 
     @RequestMapping(method = RequestMethod.POST)

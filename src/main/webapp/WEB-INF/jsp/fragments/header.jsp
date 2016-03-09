@@ -24,7 +24,7 @@
                     <sec:authorize access="isAnonymous()">
                         <li class="active">
                             <form action="login" method="get" >
-                                <input class="btn btn-link" type="submit" value="<spring:message code="registration.login" />"/>
+                                <input class="btn btn-link" type="submit" value="<spring:message code="profile.login" />"/>
                                 <sec:csrfInput />
                             </form>
                         </li>

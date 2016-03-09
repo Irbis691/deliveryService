@@ -29,6 +29,7 @@ public class SimpleAccountService implements AccountService{
     private RoleRepository roleRepository;
     
     @Override
+    @Transactional
     public Account saveOrUpdate(Account account) {
         return accountRepository.saveOrUpdate(account);
     }

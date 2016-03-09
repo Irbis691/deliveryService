@@ -25,6 +25,7 @@ import javax.persistence.Table;
     @NamedQuery(name = "Role.findByName", query = "SELECT r FROM Role r WHERE r.name = :name")
 })
 public class Role implements Serializable {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "role_id")
@@ -58,7 +59,7 @@ public class Role implements Serializable {
 
     @Override
     public String toString() {
-        return "Role{" + "id=" + id + ", name=" + name + '}';
+        return name;
     }    
     
 }

@@ -9,7 +9,6 @@ import com.preproduction.delivery.service.customer.CustomerService;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,9 +23,7 @@ public class SimpleOrderService implements OrderService {
     private OrderRepository orderRepository;
     @Autowired
     private PriceCalculator priceCalculator;
-    @Autowired
-    private CustomerService customerService;
-
+    
     public SimpleOrderService() {
     }
     
@@ -37,7 +34,7 @@ public class SimpleOrderService implements OrderService {
     }
     
     @Override
-    public void addPizzaToOrder(Order order, Pizza pizza) {
+    public void addPizzaToOrder(Order order, Pizza pizza) {       
         order.addPizza(pizza);
         order.setOrderPrice(getOrderPrice(order));
     }        

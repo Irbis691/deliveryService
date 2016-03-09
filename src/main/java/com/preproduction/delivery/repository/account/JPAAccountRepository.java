@@ -6,7 +6,6 @@
 package com.preproduction.delivery.repository.account;
 
 import com.preproduction.delivery.domain.Account;
-import com.preproduction.delivery.domain.Customer;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;

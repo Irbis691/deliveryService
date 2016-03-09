@@ -41,7 +41,7 @@ public class Customer implements Serializable {
     @JoinColumn(name = "card_id")
     private BonusCard bonusCard;
     @OneToMany(mappedBy = "customer", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    private List<Order> orders = new ArrayList<>();    
+    private List<Order> orders = new ArrayList<>();
 
     public Customer() {
     }        

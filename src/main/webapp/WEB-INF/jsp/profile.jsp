@@ -18,12 +18,11 @@
         <div class="container">
             <h2><spring:message code="profile.title" /></h2>
             <form:form class="form-horizontal" action="profile" method="post" modelAttribute="account" commandName="account">
-                <form:hidden path="id" />                
-                <form:hidden path="address.id" />
-                <%--<form:hidden path="roles" />--%>
+                <%--<form:hidden path="id" />--%>                
+                <%--<form:hidden path="address.id" />--%>
                 <spring:bind path="login">
                     <div class="form-group ${status.error ? 'has-error' : ''}">
-                        <label class="col-sm-2"><spring:message code="registration.login" /></label>
+                        <label class="col-sm-2"><spring:message code="profile.login" /></label>
                         <div class="col-sm-10">
                             <form:input path="login" class="form-control"/>
                             <form:errors path="login" class="control-label" />
@@ -54,10 +53,10 @@
                         <form:input path="address.street" class="form-control"/>
                     </div>
                 </div>
-<!--                <div class="form-group">
+                <div class="form-group">
                     <label class="col-sm-2"><spring:message code="profile.card" /></label>
-                    <div class="col-sm-10">${customer.bonusCard.bonusSize}</div>
-                </div>                                -->
+                    <div class="col-sm-10">${bonus}</div>
+                </div>                                
                 <form:button class="btn-lg btn-primary pull-left" type="submit"><spring:message code="edit" /></form:button>
             </form:form>
         </div>

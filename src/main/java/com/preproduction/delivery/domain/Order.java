@@ -14,10 +14,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import org.springframework.stereotype.Component;
 
@@ -42,29 +42,33 @@ public class Order implements Serializable {
     @ManyToOne(cascade = {CascadeType.MERGE})
     @JoinColumn(name = "customer_id")
     private Customer customer;
-    @ManyToMany
-    @JoinTable(name = "order_pizzas",
-            joinColumns = {
-                @JoinColumn(name = "order_id")},
-            inverseJoinColumns = {
-                @JoinColumn(name = "pizza_id")})
-    private List<Pizza> pizzas = new ArrayList<>();
+    @OneToMany(mappedBy = "order", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private List<OrderDetails> pizzas = new ArrayList<>();
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
     @Column(name = "price")
     private Double orderPrice;
+    @Column(name = "orderSize")
+    private Integer orderSize;
 
     public Order() {
     }
 
+    public Order(Customer customer, OrderStatus orderStatus, Integer orderSize) {
+        this.customer = customer;
+        this.orderStatus = orderStatus;
+        this.orderSize = orderSize;
+    }
+
     public Order(Integer id, Customer customer, OrderStatus OrderStatus,
-            List<Pizza> pizzas, Double orderPrice) {
+            List<OrderDetails> pizzas, Double orderPrice, Integer orderSize) {
         this.id = id;
         this.customer = customer;
         this.pizzas = pizzas;
         this.orderStatus = OrderStatus;
         this.orderPrice = orderPrice;
+        this.orderSize = orderSize;
     }
 
     public Integer getId() {
@@ -83,11 +87,11 @@ public class Order implements Serializable {
         this.customer = customer;
     }
 
-    public List<Pizza> getPizzas() {
+    public List<OrderDetails> getPizzas() {
         return pizzas;
     }
 
-    public void setPizzas(List<Pizza> pizzas) {
+    public void setPizzas(List<OrderDetails> pizzas) {
         this.pizzas = pizzas;
     }
 
@@ -99,14 +103,6 @@ public class Order implements Serializable {
         this.orderStatus = orderType;
     }
 
-    public Double getPurePizzasPrice() {
-        Double price = 0d;
-        for (Pizza p : pizzas) {
-            price += p.getPrice();
-        }
-        return price;
-    }
-
     public Double getOrderPrice() {
         return orderPrice;
     }
@@ -115,30 +111,37 @@ public class Order implements Serializable {
         this.orderPrice = orderPrice;
     }
 
-    public void addPizzas(List<Pizza> newPizzas) {
-        for (Pizza p : newPizzas) {
-            if (this.pizzas.size() >= MAX_ORDER_SIZE) {
-                break;
-            }
-            pizzas.add(p);
-        }
+    public Integer getOrderSize() {
+        return orderSize;
+    }
+
+    public void setOrderSize(Integer orderSize) {
+        this.orderSize = orderSize;
     }
 
     public void addPizza(Pizza pizza) {
-//        if (this.pizzas.size() < MAX_ORDER_SIZE) {
-        pizzas.add(pizza);
-//        }
+        if (orderSize < MAX_ORDER_SIZE) {
+            orderSize++;
+            for (OrderDetails od : pizzas) {
+                if (od.getPizza().equals(pizza)) {
+                    od.setQuantity(od.getQuantity() + 1);
+                    return;
+                }
+            }
+            pizzas.add(new OrderDetails(pizza, 1));            
+        }
     }
 
     @Override
     public String toString() {
         StringBuilder str = new StringBuilder("");
-        for (Pizza p : pizzas) {
-            str.append(p.toString());
+        for (OrderDetails od : pizzas) {
+            str.append(od.toString());
         }
         String cust = customer != null ? customer.getId().toString() : null;
         return "Order{" + "id=" + id + ", customer=" + cust + ", pizzas=" + str
-                + ", orderStatus=" + orderStatus + ", orderPrice=" + orderPrice + '}';
+                + ", orderStatus=" + orderStatus + ", orderPrice=" + orderPrice
+                + ", orderSize=" + orderSize + '}';
     }
 
     public enum OrderStatus {

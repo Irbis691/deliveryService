@@ -32,16 +32,16 @@ public class OrderController {
 
     @Autowired
     private OrderService orderService;
-    
+
     @Autowired
     private AccountService accountService;
-    
+
     @Autowired
     private CustomerService customerService;
 
     @RequestMapping(value = "/order", method = RequestMethod.POST)
     public String updateOrder(@ModelAttribute Pizza pizza,
-            @ModelAttribute Order order, Model model) {
+            @ModelAttribute Order order) {
         orderService.addPizzaToOrder(order, pizza);
         return "redirect:pizzas";
     }
@@ -52,9 +52,10 @@ public class OrderController {
         order.getPizzas().clear();
         order.setId(null);
         order.setOrderPrice(null);
+        order.setOrderSize(null);
         return "redirect:pizzas";
     }
-    
+
     @RequestMapping(value = "/orders", method = RequestMethod.GET)
     public String getOrders(Model model) {
         Account account = accountService.findByLogin(SecurityContextHolder.
@@ -66,15 +67,13 @@ public class OrderController {
 
     @ModelAttribute("order")
     public Order createOrder() {
-        Order order = new Order();
         Account account = accountService.findByLogin(SecurityContextHolder.
                 getContext().getAuthentication().getName());
         Customer customer = customerService.findByAccount(account);
-        order.setCustomer(customer);
-        order.setOrderStatus(Order.OrderStatus.NEW);
+        Order order = new Order(customer, Order.OrderStatus.NEW, 0);
         return order;
     }
-    
+
     @ModelAttribute("pizza")
     public Pizza findPizza(@RequestParam(value = "pizzaId", required = false) Pizza pizza) {
         return pizza;

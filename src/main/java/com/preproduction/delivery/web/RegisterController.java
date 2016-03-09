@@ -46,7 +46,7 @@ public class RegisterController {
             return "registration";
         } else {
             customerService.registerCustomer(account);
-            return "registration";
+            return "login";
         }
     }
 

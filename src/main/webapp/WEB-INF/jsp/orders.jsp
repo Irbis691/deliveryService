@@ -25,6 +25,7 @@
                         <th><spring:message code="orders.id" /></th>
                         <th><spring:message code="orders.status" /></th>
                         <th><spring:message code="price" /></th>
+                        <th><spring:message code="order.size" /></th>
                         <th colspan="2"><spring:message code="actions" /></th>
                     </tr>
                 </thead>
@@ -33,6 +34,7 @@
                         <td>${order.id}</td>
                         <td>${order.orderStatus}</td>
                         <td>${order.orderPrice}</td>
+                        <td>${order.orderSize}</td>
                         <td>
                             <form method="post" action="orderEdit" >
                                 <input type="hidden" name="orderId" value="${order.id}" />
