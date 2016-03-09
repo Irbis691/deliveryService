@@ -24,8 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 @Entity
 @Table(name = "customers")
 @NamedQueries({
-    @NamedQuery(name = "Customer.findByAccountMail", query = "SELECT c FROM Customer c, Account a WHERE c.account = a.id AND a.mail = :mail"),
-    @NamedQuery(name = "Customer.findByAccountLogin", query = "SELECT c FROM Customer c, Account a WHERE c.account = a.id AND a.login = :login")
+    @NamedQuery(name = "Customer.findByAccount", query = "SELECT c FROM Customer c WHERE c.account = account.id AND account = :account"),  
 })
 public class Customer implements Serializable {
     
@@ -42,22 +41,17 @@ public class Customer implements Serializable {
     @JoinColumn(name = "card_id")
     private BonusCard bonusCard;
     @OneToMany(mappedBy = "customer", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    private List<Order> orders = new ArrayList<>();
-    @Autowired
-    @OneToOne(orphanRemoval = true, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name = "address_id")
-    private Address address;
+    private List<Order> orders = new ArrayList<>();    
 
     public Customer() {
     }        
 
     public Customer(Integer id, Account account, BonusCard bonusCard,
-            List<Order> orders, Address address) {
+            List<Order> orders) {
         this.id = id;
         this.account = account;
         this.bonusCard = bonusCard;
-        this.orders = orders;
-        this.address = address;
+        this.orders = orders;        
     }
 
     public Integer getId() {
@@ -91,14 +85,6 @@ public class Customer implements Serializable {
     public void setOrders(List<Order> orders) {
         this.orders = orders;
     }
-
-    public Address getAddress() {
-        return address;
-    }
-
-    public void setAddress(Address address) {
-        this.address = address;
-    } 
         
     @Override
     public String toString() {
@@ -107,8 +93,7 @@ public class Customer implements Serializable {
             str.append(o.toString());
         }
         return "Customer{" + "id=" + id + ", account=" + account + 
-                ", bonusCard=" + bonusCard + ", orders=" + str +
-                ", address=" + address +'}';
+                ", bonusCard=" + bonusCard + ", orders=" + str +'}';
     }
         
 }

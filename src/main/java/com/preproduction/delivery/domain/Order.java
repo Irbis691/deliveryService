@@ -16,6 +16,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import org.springframework.stereotype.Component;
 
@@ -26,6 +28,9 @@ import org.springframework.stereotype.Component;
 @Component
 @Entity
 @Table(name = "orders")
+@NamedQueries({
+    @NamedQuery(name = "Order.findByCustomer", query = "SELECT o FROM Order o WHERE o.customer = :customer")
+})
 public class Order implements Serializable {
 
     private static final int MAX_ORDER_SIZE = 10;
@@ -46,7 +51,7 @@ public class Order implements Serializable {
     private List<Pizza> pizzas = new ArrayList<>();
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
-    private OrderStatus OrderStatus;
+    private OrderStatus orderStatus;
     @Column(name = "price")
     private Double orderPrice;
 
@@ -58,7 +63,7 @@ public class Order implements Serializable {
         this.id = id;
         this.customer = customer;
         this.pizzas = pizzas;
-        this.OrderStatus = OrderStatus;
+        this.orderStatus = OrderStatus;
         this.orderPrice = orderPrice;
     }
 
@@ -87,11 +92,11 @@ public class Order implements Serializable {
     }
 
     public OrderStatus getOrderStatus() {
-        return OrderStatus;
+        return orderStatus;
     }
 
     public void setOrderStatus(OrderStatus orderType) {
-        this.OrderStatus = orderType;
+        this.orderStatus = orderType;
     }
 
     public Double getPurePizzasPrice() {
@@ -101,7 +106,7 @@ public class Order implements Serializable {
         }
         return price;
     }
-    
+
     public Double getOrderPrice() {
         return orderPrice;
     }
@@ -132,8 +137,8 @@ public class Order implements Serializable {
             str.append(p.toString());
         }
         String cust = customer != null ? customer.getId().toString() : null;
-        return "Order{" + "id=" + id + ", customer=" + cust + ", pizzas=" + str +
-                ", OrderStatus=" + OrderStatus + '}';
+        return "Order{" + "id=" + id + ", customer=" + cust + ", pizzas=" + str
+                + ", orderStatus=" + orderStatus + ", orderPrice=" + orderPrice + '}';
     }
 
     public enum OrderStatus {

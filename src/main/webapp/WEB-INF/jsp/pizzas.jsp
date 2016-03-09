@@ -7,51 +7,26 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 <jsp:include page="fragments/header.jsp" />
 
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Pizzas List</title>
-    </head>    
-    <body>
-        <div class="container">
-            <%--<c:if test='${order}'>--%>
-            <!--                <h2>Current order</h2>
-                            <table class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Type</th>
-                                        <th>Price, $</th>
-                                        <th colspan="2">Actions</th>
-                                    </tr>
-                                </thead>-->
-            <%--<c:forEach var="pizza" items="${order.pizzas}">--%>
-            <!--                        <tr>
-                                        <td>${pizza.name}</td>
-                                        <td>${pizza.pizzaType}</td>
-                                        <td>${pizza.price}</td>
-                                        <td>
-                                            <form method="get" action="del" >
-                                                <input type="hidden" name="pizzaId" value="${pizza.id}" />
-                                                <input class="btn btn-info" type="submit" value="Delete" />
-                                            </form>
-                                        </td>
-                                    </tr>-->
-            <%--</c:forEach>--%>
-            <!--</table>-->
-            <%--</c:if>--%>           
-            <h2>Avaliable pizzas</h2>
+        <title><spring:message code="pizzas.title" /></title>
+    </head>
+    <body>        
+        <div class="container">            
+            <h2><spring:message code="pizzas.title" /></h2>
             <h2>Order: ${order.toString()}</h2>
             <table class="table table-striped">
                 <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>Type</th>
-                        <th>Price, $</th>
-                        <th colspan="2">Actions</th>
+                        <th><spring:message code="pizzas.name" /></th>
+                        <th><spring:message code="pizzas.type" /></th>
+                        <th><spring:message code="price" /></th>
+                        <th colspan="2"><spring:message code="actions" /></th>
                     </tr>
                 </thead>
                 <c:forEach var="pizza" items="${pizzas}">
@@ -63,7 +38,7 @@
                             <td>
                                 <form method="post" action="order" >                                    
                                     <input type="hidden" name="pizzaId" value="${pizza.id}" />
-                                    <input class="btn btn-danger" type="submit" value="Add" />
+                                    <input class="btn btn-danger" type="submit" value="<spring:message code="pizzas.order" />" />
                                     <sec:csrfInput />
                                 </form>
                             </td>
@@ -72,14 +47,14 @@
                             <td>
                                 <form method="post" action="edit" >
                                     <input type="hidden" name="pizzaId" value="${pizza.id}" />
-                                    <input class="btn btn-info" type="submit" value="Edit" />
+                                    <input class="btn btn-info" type="submit" value="<spring:message code="edit" />" />
                                     <sec:csrfInput />
                                 </form>
                             </td>
                             <td>
                                 <form method="get" action="delete" >
                                     <input type="hidden" name="pizzaId" value="${pizza.id}" />
-                                    <input class="btn btn-primary" type="submit" value="Delete" />
+                                    <input class="btn btn-danger" type="submit" value="<spring:message code="delete" />" />
                                     <sec:csrfInput />
                                 </form>
                             </td>
@@ -89,14 +64,13 @@
             </table>
             <sec:authorize access="hasRole('ROLE_ADMIN')">
                 <form method="post" action="create" >            
-                    <input class="btn btn-primary pull-right" type="submit" value="Create new pizza" />
+                    <input class="btn btn-primary pull-right" type="submit" value="<spring:message code="pizzas.create.pizza" />" />
                     <sec:csrfInput />
                 </form>
             </sec:authorize>
             <sec:authorize access="hasRole('ROLE_USER')">
-                <form method="post" action="placeOrder" >            
-                    <input type="hidden" name="order" value="${order}" />
-                    <input class="btn btn-primary pull-right" type="submit" value="Place order" />
+                <form method="post" action="placeOrder" >
+                    <input class="btn btn-primary pull-right" type="submit" value="<spring:message code="pizzas.place.order" />" />
                     <sec:csrfInput />
                 </form>
             </sec:authorize>

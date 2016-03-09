@@ -14,38 +14,36 @@
 <html>
     <head>        
         <title><spring:message code="registration.title" /></title>
-    </head>
-    <%--<sec:authorize access="isAnonymous()">--%>
-        <body>
-            <div class="container">
-                <h2><spring:message code="registration.title" /></h2>
+    </head>    
+    <body>
+        <div class="container">
+            <h2><spring:message code="registration.title" /></h2>
 
-                <form:form class="form-horizontal" action="registration" method="post" modelAttribute="account" commandName="account">
+            <form:form class="form-horizontal" action="registration" method="post" modelAttribute="account" commandName="account">
 
-                    <spring:bind path="mail">
-                        <div class="form-group ${status.error ? 'has-error' : ''}">                        
-                            <label class="col-sm-2 control-label"><spring:message code="registration.mail" /></label>
-                            <div class="col-sm-10">
-                                <form:input path="mail" class="form-control" placeholder="test@gmail.com"/>
-                                <form:errors path="mail" class="control-label" />
-                            </div>
+                <spring:bind path="mail">
+                    <div class="form-group ${status.error ? 'has-error' : ''}">
+                        <label class="col-sm-2 control-label"><spring:message code="registration.mail" /></label>
+                        <div class="col-sm-10">
+                            <form:input path="mail" class="form-control" placeholder="test@gmail.com"/>
+                            <form:errors path="mail" class="control-label" />
                         </div>
-                    </spring:bind>
+                    </div>
+                </spring:bind>
 
-                    <spring:bind path="password">
-                        <div class="form-group ${status.error ? 'has-error' : ''}">
-                            <label class="col-sm-2 control-label"><spring:message code="registration.pass" /></label>
-                            <div class="col-sm-10">
-                                <form:password path="password" class="form-control" placeholder="password"/>
-                                <form:errors path="password" class="control-label"  />
-                            </div>
+                <spring:bind path="password">
+                    <div class="form-group ${status.error ? 'has-error' : ''}">
+                        <label class="col-sm-2 control-label"><spring:message code="registration.pass" /></label>
+                        <div class="col-sm-10">
+                            <form:password path="password" class="form-control" placeholder="password"/>
+                            <form:errors path="password" class="control-label"  />
                         </div>
-                    </spring:bind>
+                    </div>
+                </spring:bind>
 
-                    <form:button class="btn-lg btn-primary pull-right" type="submit"><spring:message code="registration.button" /></form:button>
+                <form:button class="btn-lg btn-primary pull-right" type="submit"><spring:message code="registration.button" /></form:button>
 
-                </form:form>
-            </div>
-        </body>
-    <%--</sec:authorize>--%>
+            </form:form>
+        </div>
+    </body>    
 </html>

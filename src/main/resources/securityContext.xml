@@ -14,7 +14,7 @@ xsi:schemaLocation="http://www.springframework.org/schema/beans
                     authentication-failure-url="/app/login?error" />
         <intercept-url pattern="/app/registration" access="isAnonymous()"/>
         <intercept-url pattern="/app/pizzas" access="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')"/>
-        <logout logout-success-url="/app/login?logout" invalidate-session="true"/>
+        <logout logout-url="/app/logout" logout-success-url="/app/login" invalidate-session="true"/>
     </http>
     
     <global-method-security secured-annotations="enabled" />

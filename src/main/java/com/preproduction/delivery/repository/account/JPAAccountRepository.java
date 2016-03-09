@@ -3,15 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.preproduction.delivery.repository.order;
+package com.preproduction.delivery.repository.account;
 
+import com.preproduction.delivery.domain.Account;
 import com.preproduction.delivery.domain.Customer;
-import com.preproduction.delivery.domain.Order;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
@@ -22,45 +21,52 @@ import org.springframework.util.CollectionUtils;
  */
 @Repository
 @Transactional
-public class JPAOrderRepository implements OrderRepository {
+public class JPAAccountRepository implements AccountRepository{
 
     @PersistenceContext
     private EntityManager em;
     
     @Override
-    @Transactional(readOnly = true)
-    public Order findById(Integer id) {
+    public Account findById(Integer id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Order saveOrUpdate(Order order) {
-        if(order.getId() == null) {
-            em.persist(order);
+    public Account saveOrUpdate(Account account) {
+        if(account.getId() == null) {
+            em.persist(account);
         } else {
-            em.merge(order);
+            em.merge(account);
         }
-        return order;
+        return account;
     }
 
     @Override
-    @Transactional(readOnly = true)
-    public List<Order> findAll() {
+    public List<Account> findAll() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void delete(Order entity) {
+    public void delete(Account entity) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     @Override
     @Transactional(readOnly = true)
-    public List<Order> findByCustomer(Customer customer) {
-        TypedQuery<Order> query = em.createNamedQuery("Order.findByCustomer", Order.class);
-        query.setParameter("customer", customer);
-        List<Order> orders = query.getResultList();
-        return CollectionUtils.isEmpty(orders) ? null : orders;
+    public Account findByMail(String mail) {
+        TypedQuery<Account> query = em.createNamedQuery("Account.findByMail", Account.class);
+        query.setParameter("mail", mail);
+        List<Account> accounts = query.getResultList();
+        return CollectionUtils.isEmpty(accounts) ? null : accounts.get(0);
+    }
+    
+    @Override
+    @Transactional(readOnly = true)
+    public Account findByLogin(String login) {
+        TypedQuery<Account> query = em.createNamedQuery("Account.findByLogin", Account.class);
+        query.setParameter("login", login);
+        List<Account> accounts = query.getResultList();
+        return CollectionUtils.isEmpty(accounts) ? null : accounts.get(0);
     }
     
 }

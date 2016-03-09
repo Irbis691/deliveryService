@@ -1,5 +1,6 @@
 package com.preproduction.delivery.repository.order;
 
+import com.preproduction.delivery.domain.Customer;
 import com.preproduction.delivery.domain.Order;
 
 import java.util.ArrayList;
@@ -37,6 +38,11 @@ public class InMemOrderRepository implements OrderRepository {
 
     @Override
     public void delete(Order entity) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<Order> findByCustomer(Customer customer) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

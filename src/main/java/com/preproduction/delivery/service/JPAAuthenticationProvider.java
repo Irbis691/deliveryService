@@ -7,7 +7,7 @@ package com.preproduction.delivery.service;
 
 import com.preproduction.delivery.domain.Account;
 import com.preproduction.delivery.domain.Role;
-import com.preproduction.delivery.service.customer.CustomerService;
+import com.preproduction.delivery.service.account.AccountService;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,17 +28,17 @@ import org.springframework.stereotype.Component;
 public class JPAAuthenticationProvider implements AuthenticationProvider {
 
     @Autowired
-    CustomerService customerService;
+    AccountService accountService;
 
     @Override
     public Authentication authenticate(Authentication auth) throws AuthenticationException {
-        String login = auth.getName();
+        String login = auth.getName();        
         String password = auth.getCredentials().toString();
         Account account = null;
         if (login != null && !"".equals(login)) {
-            account = customerService.findByLogin(login).getAccount();
-        }
-        if (account != null && account.getPassword().equals(password)) {            
+            account = accountService.findByLogin(login);
+        }        
+        if (account != null && account.getPassword().equals(password)) {
             List<GrantedAuthority> authorities = new ArrayList<>();
             for (Role r : account.getRoles()) {
                 authorities.add(new SimpleGrantedAuthority("ROLE_" + r.getName()));

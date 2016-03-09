@@ -14,12 +14,8 @@ import com.preproduction.delivery.domain.Customer;
  */
 public interface CustomerService {    
     
-    Customer saveOrUpdate(Customer customer);   
-    Customer findByMail(String mail);
-    Customer findByLogin(String login);
+    Customer saveOrUpdate(Customer customer);
     Customer registerCustomer(Account account);
-    void setLoginFromEmail(Account account);
-    void setRole(Account account);
-//    void setCard(Account account);
+    Customer findByAccount(Account account);
             
 }

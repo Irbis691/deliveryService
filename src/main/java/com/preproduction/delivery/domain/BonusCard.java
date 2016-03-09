@@ -51,6 +51,10 @@ public class BonusCard implements Serializable {
     }
 
     public Double getBonusSize() {
+        return bonusSize;
+    }
+    
+    public Double calcDiscount() {
         return bonusSize * BONUS_PERCENT;
     }
 

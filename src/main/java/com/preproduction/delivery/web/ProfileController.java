@@ -6,10 +6,13 @@
 package com.preproduction.delivery.web;
 
 import com.preproduction.delivery.domain.Account;
+import com.preproduction.delivery.domain.BonusCard;
 import com.preproduction.delivery.domain.Customer;
+import com.preproduction.delivery.service.account.AccountService;
 import com.preproduction.delivery.service.customer.CustomerService;
 import com.preproduction.delivery.validator.AccountValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -18,6 +21,7 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -25,28 +29,31 @@ import org.springframework.web.servlet.ModelAndView;
  * @author Irbis
  */
 @Controller
-@RequestMapping(value = "/registration")
-public class RegisterController {
+@RequestMapping(value = "/profile")
+public class ProfileController {
+
+    @Autowired
+    AccountService accountService;
 
     @Autowired
     AccountValidator accountValidator;
 
-    @Autowired
-    private CustomerService customerService;
-
     @RequestMapping(method = RequestMethod.GET)
-    public ModelAndView viewRegistration() {
-        return new ModelAndView("registration", "account", new Account());
+    public ModelAndView viewProfile() {
+        Account account = accountService.findByLogin(SecurityContextHolder.
+                getContext().getAuthentication().getName());
+        return new ModelAndView("profile", "account", account);
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public String registerCustomer(@ModelAttribute("account") @Validated Account account,
-            BindingResult result) {
+    public String editProfile(@ModelAttribute("account") @Validated Account account,
+           BindingResult result) {
         if (result.hasErrors()) {
-            return "registration";
+            return "redirect:profile";
         } else {
-            customerService.registerCustomer(account);
-            return "registration";
+            System.out.println(account);
+            accountService.saveOrUpdate(account);
+            return "redirect:profile";
         }
     }
 

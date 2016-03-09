@@ -5,6 +5,7 @@
  */
 package com.preproduction.delivery.repository.customer;
 
+import com.preproduction.delivery.domain.Account;
 import com.preproduction.delivery.domain.Customer;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -20,11 +21,11 @@ import org.springframework.util.CollectionUtils;
  */
 @Repository
 @Transactional
-public class JPACustomerRepository implements CustomerRepository{
+public class JPACustomerRepository implements CustomerRepository {
 
     @PersistenceContext
     private EntityManager em;
-    
+
     @Override
     @Transactional(readOnly = true)
     public Customer findById(Integer id) {
@@ -33,7 +34,7 @@ public class JPACustomerRepository implements CustomerRepository{
 
     @Override
     public Customer saveOrUpdate(Customer customer) {
-        if(customer.getId() == null) {
+        if (customer.getId() == null) {
             em.persist(customer);
         } else {
             em.merge(customer);
@@ -42,6 +43,7 @@ public class JPACustomerRepository implements CustomerRepository{
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Customer> findAll() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
@@ -52,19 +54,10 @@ public class JPACustomerRepository implements CustomerRepository{
     }
 
     @Override
-    public Customer findByAccountMail(String mail) {
-        TypedQuery<Customer> query = em.createNamedQuery("Customer.findByAccountMail", Customer.class);
-        query.setParameter("mail", mail);
+    public Customer findByAccount(Account account) {
+        TypedQuery<Customer> query = em.createNamedQuery("Customer.findByAccount", Customer.class);
+        query.setParameter("account", account);
         List<Customer> customers = query.getResultList();
         return CollectionUtils.isEmpty(customers) ? null : customers.get(0);
     }
-    
-    @Override
-    public Customer findByAccountLogin(String login) {
-        TypedQuery<Customer> query = em.createNamedQuery("Customer.findByAccountLogin", Customer.class);
-        query.setParameter("login", login);
-        List<Customer> customers = query.getResultList();
-        return CollectionUtils.isEmpty(customers) ? null : customers.get(0);
-    }
-    
 }

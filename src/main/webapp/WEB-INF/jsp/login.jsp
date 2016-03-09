@@ -36,8 +36,10 @@
                     <input class="btn-lg btn-primary pull-right" name="commit" type="submit" value="<spring:message code="login.button" />" />
                     <sec:csrfInput />
                 </form>
-                <c:if test='${error}'>
-                    <span style="color: red; font-weight: bold;">Authorization failed</span>
+                <c:if test='${error}'>                    
+                    <label class="col-sm-2 control-label pull-right text-danger">
+                        <spring:message code="login.fail" />
+                    </label>                    
                 </c:if>
             </div>
         </body>

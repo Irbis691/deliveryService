@@ -6,10 +6,8 @@ import com.preproduction.delivery.domain.Pizza;
 import com.preproduction.delivery.domain.PriceCalculator;
 import com.preproduction.delivery.repository.order.OrderRepository;
 import com.preproduction.delivery.service.customer.CustomerService;
-import com.preproduction.delivery.service.pizza.PizzaService;
-
-import java.util.ArrayList;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -33,31 +31,18 @@ public class SimpleOrderService implements OrderService {
     }
     
     public SimpleOrderService(OrderRepository orderRepository,                              
-                              PriceCalculator priceCalculator,
-                              CustomerService customerService) {
+                              PriceCalculator priceCalculator) {
         this.orderRepository = orderRepository;        
-        this.priceCalculator = priceCalculator;
-        this.customerService = customerService;
+        this.priceCalculator = priceCalculator;        
     }
     
     @Override
-    public void updateOrder(Order order, Pizza pizza) {
+    public void addPizzaToOrder(Order order, Pizza pizza) {
         order.addPizza(pizza);
-    }
-        
-    @Override
-    @Transactional
-    public Order placeNewOrder(Order order) {
-        Customer customer = customerService.findByLogin(SecurityContextHolder.
-                getContext().getAuthentication().getName());        
-        order.setCustomer(customer);
-        order.setOrderStatus(Order.OrderStatus.NEW);
         order.setOrderPrice(getOrderPrice(order));
-        saveOrder(order);
-        return order;
-    }     
+    }        
     
-    public Double getOrderPrice(Order order) {
+    private Double getOrderPrice(Order order) {
         return priceCalculator.calculatePrice(order);
     }
     
@@ -68,9 +53,16 @@ public class SimpleOrderService implements OrderService {
         order.setOrderStatus(newStatus);
     }
 
+    @Override
     @Transactional
-    private void saveOrder(Order order) {
-        orderRepository.saveOrUpdate(order);
+    public Order saveOrUpdate(Order order) {
+        return orderRepository.saveOrUpdate(order);
     }
+    
+    @Override
+    @Transactional
+    public List<Order> findByCustomer(Customer customer) {        
+        return orderRepository.findByCustomer(customer);
+    }        
 
 }

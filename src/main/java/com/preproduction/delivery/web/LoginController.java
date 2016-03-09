@@ -6,6 +6,7 @@
 package com.preproduction.delivery.web;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -15,11 +16,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 
 @Controller
-public class IndexController {
-
-    @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String viewPizzas() {
-        return "redirect:pizzas";
+public class LoginController {
+    
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public String viewLogin() {
+        return "login";
     }
-
+    
+    @RequestMapping(value = "/login", method = RequestMethod.GET, params = "error")
+    public String viewLoginWithError(Model model) {
+        model.addAttribute("error", true);
+        return "login";
+    }
+    
 }
