@@ -127,7 +127,7 @@ public class Order implements Serializable {
                     return;
                 }
             }
-            pizzas.add(new OrderDetails(pizza, 1));
+            pizzas.add(new OrderDetails(pizza, 1, this));
         }
     }
 

@@ -42,9 +42,10 @@ public class OrderDetails implements Serializable {
     public OrderDetails() {
     }
 
-    public OrderDetails(Pizza pizza, Integer quantity) {
+    public OrderDetails(Pizza pizza, Integer quantity, Order order) {
         this.pizza = pizza;
         this.quantity = quantity;
+        this.order = order;
     }
     
     public OrderDetails(Integer id, Pizza pizza, Integer quantity, Order order) {
