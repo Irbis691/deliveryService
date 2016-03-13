@@ -85,5 +85,10 @@ public class SimpleOrderService implements OrderService {
     public Order findById(Integer id) {
         return orderRepository.findById(id);
     }
+    
+    @Override
+    public void deleteOrder(Order order) {
+        orderRepository.delete(order);
+    }
 
 }

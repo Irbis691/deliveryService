@@ -18,5 +18,5 @@ public interface OrderService {
     List<Order> findAll();
     List<Order> findByCustomer(Customer customer);
     void setOrderStatus(Order order, Order.OrderStatus newStatus);
-
+    void deleteOrder(Order order);
 }

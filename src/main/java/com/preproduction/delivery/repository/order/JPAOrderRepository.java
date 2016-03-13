@@ -45,13 +45,14 @@ public class JPAOrderRepository implements OrderRepository {
     @Override
     @Transactional(readOnly = true)
     public List<Order> findAll() {
-        List<Order> orders = em.createQuery("from Order", Order.class).getResultList();        
+        List<Order> orders = em.createQuery("from Order", Order.class).getResultList();
         return orders;
     }
 
     @Override
-    public void delete(Order entity) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void delete(Order order) {
+        Order p = em.merge(order);
+        em.remove(p);
     }
 
     @Override

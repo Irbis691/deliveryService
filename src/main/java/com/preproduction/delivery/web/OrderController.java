@@ -90,6 +90,13 @@ public class OrderController {
         orderService.setOrderStatus(order, orderStatus);
         return "redirect:/app/orders";
     }
+    
+    @RequestMapping(value = "/order/delete", method = RequestMethod.GET)
+    public String deleteOrder(@RequestParam(value = "orderId") Integer id) {
+        Order order = orderService.findById(id);
+        orderService.deleteOrder(order);
+        return "redirect:/app/orders";
+    }
 
     @ModelAttribute("order")
     public Order createOrder() {

@@ -41,7 +41,7 @@ public class Order implements Serializable {
     @ManyToOne(cascade = {CascadeType.MERGE})
     @JoinColumn(name = "customer_id")
     private Customer customer;
-    @OneToMany(mappedBy = "order", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToMany(mappedBy = "order", orphanRemoval = true, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<OrderDetails> pizzas = new ArrayList<>();
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
