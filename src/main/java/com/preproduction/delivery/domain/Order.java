@@ -98,9 +98,9 @@ public class Order implements Serializable {
         return orderStatus;
     }
 
-    public void setOrderStatus(OrderStatus orderType) {
-        this.orderStatus = orderType;
-    }
+    public void setOrderStatus(OrderStatus orderStatus) {
+        this.orderStatus = orderStatus;
+    }        
 
     public Double getOrderPrice() {
         return orderPrice;
@@ -169,14 +169,5 @@ public class Order implements Serializable {
             return validTransitionStatuses;
         }
 
-    }
-
-    public void changeOrderStatus(OrderStatus orderStatus) {
-        OrderStatus currStatus = getOrderStatus();
-        if (Arrays.asList(currStatus.getValidTransitionStatuses()).contains(orderStatus)) {
-            setOrderStatus(orderStatus);
-        } else {
-            throw new IllegalArgumentException("Not valid transition status");
-        }
     }
 }

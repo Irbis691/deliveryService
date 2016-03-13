@@ -11,7 +11,6 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
@@ -26,16 +25,16 @@ public class JPAOrderRepository implements OrderRepository {
 
     @PersistenceContext
     private EntityManager em;
-    
+
     @Override
     @Transactional(readOnly = true)
     public Order findById(Integer id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return em.find(Order.class, id);
     }
 
     @Override
     public Order saveOrUpdate(Order order) {
-        if(order.getId() == null) {
+        if (order.getId() == null) {
             em.persist(order);
         } else {
             em.merge(order);
@@ -46,14 +45,15 @@ public class JPAOrderRepository implements OrderRepository {
     @Override
     @Transactional(readOnly = true)
     public List<Order> findAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        List<Order> orders = em.createQuery("from Order", Order.class).getResultList();        
+        return orders;
     }
 
     @Override
     public void delete(Order entity) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
     @Override
     @Transactional(readOnly = true)
     public List<Order> findByCustomer(Customer customer) {
@@ -62,5 +62,5 @@ public class JPAOrderRepository implements OrderRepository {
         List<Order> orders = query.getResultList();
         return CollectionUtils.isEmpty(orders) ? null : orders;
     }
-    
+
 }

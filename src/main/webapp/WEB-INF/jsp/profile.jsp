@@ -18,8 +18,6 @@
         <div class="container">
             <h2><spring:message code="profile.title" /></h2>
             <form:form class="form-horizontal" action="profile" method="post" modelAttribute="account" commandName="account">
-                <%--<form:hidden path="id" />--%>                
-                <%--<form:hidden path="address.id" />--%>
                 <spring:bind path="login">
                     <div class="form-group ${status.error ? 'has-error' : ''}">
                         <label class="col-sm-2"><spring:message code="profile.login" /></label>

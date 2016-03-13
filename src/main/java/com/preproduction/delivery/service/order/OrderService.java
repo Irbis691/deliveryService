@@ -14,6 +14,9 @@ public interface OrderService {
     void deletePizzaFomrOrder(Order order, Pizza pizza);
     void addPizzaToOrder(Order order, Pizza pizza);
     Order saveOrUpdate(Order order);
-    public List<Order> findByCustomer(Customer customer);
+    Order findById(Integer id);
+    List<Order> findAll();
+    List<Order> findByCustomer(Customer customer);
+    void setOrderStatus(Order order, Order.OrderStatus newStatus);
 
 }

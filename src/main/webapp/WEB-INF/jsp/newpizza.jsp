@@ -13,7 +13,7 @@
         <title>New/Update pizza</title>
     </head>
     <body>
-        <form action="addnew" method="post">
+        <form action="pizza/addnew" method="post">
             <input type="hidden" name="pizzaId" value="${pizza.id}"/>
             Name : <input type="text" name="name" value="${pizza.name}"/></br>
             <!--Type : <input type="text" name="pizzaType" value="${pizza.pizzaType}"/></br>-->

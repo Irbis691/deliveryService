@@ -27,7 +27,6 @@ public class SimplePizzaService implements PizzaService {
     }
     
     @Override
-//    @Secured("ROLE_ADMIN")
     public Pizza saveOrUpdate(Pizza pizza) {
         return pizzaRepository.saveOrUpdate(pizza);
     }
@@ -37,8 +36,7 @@ public class SimplePizzaService implements PizzaService {
         return pizzaRepository.findById(id);
     }
     
-    @Override    
-//    @Secured({"ROLE_ADMIN", "ROLE_USER"})
+    @Override
     public List<Pizza> findAll() {
         return  pizzaRepository.findAll();
     }

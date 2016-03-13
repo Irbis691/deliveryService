@@ -9,9 +9,11 @@ import com.preproduction.delivery.domain.Account;
 import com.preproduction.delivery.domain.Customer;
 import com.preproduction.delivery.domain.Order;
 import com.preproduction.delivery.domain.Pizza;
+import com.preproduction.delivery.domain.Role;
 import com.preproduction.delivery.service.account.AccountService;
 import com.preproduction.delivery.service.customer.CustomerService;
 import com.preproduction.delivery.service.order.OrderService;
+import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -39,8 +41,8 @@ public class OrderController {
     @Autowired
     private CustomerService customerService;
 
-    @RequestMapping(value = "/order", method = RequestMethod.POST)
-    public String updateOrder(@ModelAttribute Pizza pizza,
+    @RequestMapping(value = "/order/add", method = RequestMethod.POST)
+    public String addPizzaToOrder(@ModelAttribute Pizza pizza,
             @ModelAttribute Order order) {
         orderService.addPizzaToOrder(order, pizza);
         return "redirect:pizzas";
@@ -48,29 +50,45 @@ public class OrderController {
 
     @RequestMapping(value = "/placeOrder", method = RequestMethod.POST)
     public String placeOrder(@ModelAttribute Order order) {
-        orderService.saveOrUpdate(order);
-        order.getPizzas().clear();
-        order.setId(null);
-        order.setOrderPrice(null);
-        order.setOrderSize(null);
+        if (!order.getOrderPrice().equals(0)) {
+            orderService.saveOrUpdate(order);
+            order.getPizzas().clear();
+            order.setId(null);
+            order.setOrderPrice(null);
+            order.setOrderSize(null);
+        }
         return "redirect:pizzas";
     }
 
-    @RequestMapping(value = "/deleteOD", method = RequestMethod.POST)
+    @RequestMapping(value = "/order/delete/part", method = RequestMethod.POST)
     public String deletePizzaFromOrder(@ModelAttribute Pizza pizza,
             @ModelAttribute Order order) {
-        System.out.println(pizza);
         orderService.deletePizzaFomrOrder(order, pizza);
-        return "redirect:pizzas";
+        return "redirect:/app/pizzas";
     }
 
     @RequestMapping(value = "/orders", method = RequestMethod.GET)
     public String getOrders(Model model) {
         Account account = accountService.findByLogin(SecurityContextHolder.
-                getContext().getAuthentication().getName());
-        Customer customer = customerService.findByAccount(account);
-        model.addAttribute("orders", orderService.findByCustomer(customer));
+                getContext().getAuthentication().getName());        
+        Set<Role> roles = account.getRoles();
+        for (Role r : roles) {
+            if (r.getName().equals("USER")) {
+                Customer customer = customerService.findByAccount(account);
+                model.addAttribute("orders", orderService.findByCustomer(customer));
+                return "orders";
+            }
+        }
+        model.addAttribute("orders", orderService.findAll());
         return "orders";
+    }
+    
+    @RequestMapping(value = "/order/status", method = RequestMethod.POST)
+    public String setOrderStatus(@RequestParam(value = "orderId") Integer id,
+            @RequestParam(value = "status") Order.OrderStatus orderStatus) {    
+        Order order = orderService.findById(id);
+        orderService.setOrderStatus(order, orderStatus);
+        return "redirect:/app/orders";
     }
 
     @ModelAttribute("order")

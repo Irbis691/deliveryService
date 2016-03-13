@@ -26,19 +26,19 @@ public class PizzaController {
         return "pizzas";
     }
    
-    @RequestMapping(value = {"/create", "/edit"}, method = RequestMethod.POST)
+    @RequestMapping(value = {"pizza/create", "pizza/edit"}, method = RequestMethod.POST)
     public String createAndEdit(Model model) {
         model.addAttribute("pizzaType", Pizza.PizzaType.values());
         return "newpizza";
     }
 
-    @RequestMapping(value = "/delete", method = RequestMethod.GET)
+    @RequestMapping(value = "pizza/delete", method = RequestMethod.GET)
     public String delete(@ModelAttribute Pizza pizza) {
         pizzaService.delete(pizza);
         return "redirect:pizzas";
     }
 
-    @RequestMapping(value = "/addnew", method = RequestMethod.POST)
+    @RequestMapping(value = "pizza/addnew", method = RequestMethod.POST)
     public String add(@ModelAttribute Pizza pizza) {
         pizzaService.saveOrUpdate(pizza);
         return "redirect:pizzas";

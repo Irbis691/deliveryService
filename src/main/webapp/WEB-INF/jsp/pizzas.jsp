@@ -33,7 +33,7 @@
                             <td>${orDet.pizza.name}</td>
                             <td>${orDet.quantity}</td>
                             <td>
-                                <form method="post" action="deleteOD" >
+                                <form method="post" action="order/delete/part" >
                                     <input type="hidden" name="pizzaId" value="${orDet.pizza.id}" />
                                     <input class="btn btn-block" type="submit" value="<spring:message code="delete" />" />
                                     <sec:csrfInput />
@@ -68,7 +68,7 @@
                         <td>${pizza.price}</td>
                         <sec:authorize access="hasRole('ROLE_USER')">
                             <td>
-                                <form method="post" action="order" >                                    
+                                <form method="post" action="order/add" >
                                     <input type="hidden" name="pizzaId" value="${pizza.id}" />
                                     <input class="btn btn-danger" type="submit" value="<spring:message code="pizzas.order" />" />
                                     <sec:csrfInput />
@@ -77,14 +77,14 @@
                         </sec:authorize>
                         <sec:authorize access="hasRole('ROLE_ADMIN')">
                             <td>
-                                <form method="post" action="edit" >
+                                <form method="post" action="pizza/edit" >
                                     <input type="hidden" name="pizzaId" value="${pizza.id}" />
                                     <input class="btn btn-info" type="submit" value="<spring:message code="edit" />" />
                                     <sec:csrfInput />
                                 </form>
                             </td>
                             <td>
-                                <form method="get" action="delete" >
+                                <form method="get" action="pizza/delete" >
                                     <input type="hidden" name="pizzaId" value="${pizza.id}" />
                                     <input class="btn btn-danger" type="submit" value="<spring:message code="delete" />" />
                                     <sec:csrfInput />
@@ -95,7 +95,7 @@
                 </c:forEach>
             </table>
             <sec:authorize access="hasRole('ROLE_ADMIN')">
-                <form method="post" action="create" >            
+                <form method="post" action="pizza/create" >            
                     <input class="btn btn-primary pull-right" type="submit" value="<spring:message code="pizzas.create.pizza" />" />
                     <sec:csrfInput />
                 </form>

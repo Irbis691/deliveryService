@@ -40,13 +40,15 @@
                             <form action="logout" method="post" >
                                 <input class="btn btn-link" type="submit" value="<spring:message code="logout" />"/>
                                 <sec:csrfInput />
-                            </form>
+                            </form>                        
                         </li>
+                    </sec:authorize>
+                    <sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')">
                         <li class="active">
                             <form action="pizzas" method="get" >
                                 <input class="btn btn-link" type="submit" value="<spring:message code="pizzas.title" />"/>
                                 <sec:csrfInput />
-                            </form>                           
+                            </form>
                         </li>
                         <li class="active">
                             <form action="orders" method="get" >
@@ -54,6 +56,8 @@
                                 <sec:csrfInput />
                             </form>
                         </li>                        
+                    </sec:authorize>
+                    <sec:authorize access="hasRole('ROLE_USER')">
                         <li class="active">
                             <form action="profile" method="get" >
                                 <input class="btn btn-link" type="submit" value="<spring:message code="profile.title" />"/>
