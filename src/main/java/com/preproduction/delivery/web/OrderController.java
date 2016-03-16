@@ -45,7 +45,7 @@ public class OrderController {
     public String addPizzaToOrder(@ModelAttribute Pizza pizza,
             @ModelAttribute Order order) {
         orderService.addPizzaToOrder(order, pizza);
-        return "redirect:pizzas";
+        return "redirect:/app/pizzas";
     }
 
     @RequestMapping(value = "/placeOrder", method = RequestMethod.POST)
@@ -57,7 +57,7 @@ public class OrderController {
             order.setOrderPrice(null);
             order.setOrderSize(null);
         }
-        return "redirect:pizzas";
+        return "redirect:/app/pizzas";
     }
 
     @RequestMapping(value = "/order/delete/part", method = RequestMethod.POST)

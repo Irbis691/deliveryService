@@ -27,7 +27,13 @@ public class SimpleAccountService implements AccountService{
     
     @Autowired
     private RoleRepository roleRepository;
-    
+
+    @Override
+    @Transactional
+    public Account findById(Integer id) {
+        return accountRepository.findById(id);
+    }
+
     @Override
     @Transactional
     public Account saveOrUpdate(Account account) {

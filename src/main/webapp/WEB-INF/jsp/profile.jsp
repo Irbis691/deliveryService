@@ -1,5 +1,5 @@
 <%-- 
-    Document   : registration
+    Document   : profile
     Created on : 02.03.2016, 17:12:18
     Author     : Irbis
 --%>
@@ -18,6 +18,7 @@
         <div class="container">
             <h2><spring:message code="profile.title" /></h2>
             <form:form class="form-horizontal" action="profile" method="post" modelAttribute="account" commandName="account">
+                <form:hidden path="id"/>
                 <spring:bind path="login">
                     <div class="form-group ${status.error ? 'has-error' : ''}">
                         <label class="col-sm-2"><spring:message code="profile.login" /></label>
@@ -48,7 +49,7 @@
                 <div class="form-group">
                     <label class="col-sm-2"><spring:message code="profile.address" /></label>
                     <div class="col-sm-10">
-                        <form:input path="address.street" class="form-control"/>
+                        <form:input path="address.address" class="form-control"/>
                     </div>
                 </div>
                 <div class="form-group">

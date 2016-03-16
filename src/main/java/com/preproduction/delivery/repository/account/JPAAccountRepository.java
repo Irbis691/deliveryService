@@ -27,7 +27,7 @@ public class JPAAccountRepository implements AccountRepository{
     
     @Override
     public Account findById(Integer id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return em.find(Account.class, id);
     }
 
     @Override

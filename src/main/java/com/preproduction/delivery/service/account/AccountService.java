@@ -13,6 +13,8 @@ import com.preproduction.delivery.domain.Account;
  */
 public interface AccountService {
 
+    Account findById(Integer id);
+
     Account saveOrUpdate(Account account);
 
     void setLoginFromEmail(Account account);

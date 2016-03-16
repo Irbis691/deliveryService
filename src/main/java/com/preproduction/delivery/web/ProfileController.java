@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- *
  * @author Irbis
  */
 @Controller
@@ -32,7 +31,7 @@ public class ProfileController {
 
     @Autowired
     AccountService accountService;
-    
+
     @Autowired
     CustomerService customerService;
 
@@ -44,21 +43,24 @@ public class ProfileController {
         Account account = accountService.findByLogin(SecurityContextHolder.
                 getContext().getAuthentication().getName());
         ModelAndView modelAndView = new ModelAndView("profile", "account", account);
-        Customer customer = customerService.findByAccount(account);       
+        Customer customer = customerService.findByAccount(account);
         modelAndView.addObject("bonus", customer.getBonusCard().getBonusSize());
         return modelAndView;
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public String editProfile(@ModelAttribute("account") @Validated Account account,
-           BindingResult result) {
-        if (result.hasErrors()) {
-            return "redirect:profile";
-        } else {
-            System.out.println(account);
+    public String editProfile(@ModelAttribute("account") @Validated Account newAccount,
+                              BindingResult result) {
+        if (!result.hasErrors()) {
+            Account account = accountService.findById(newAccount.getId());
+            account.setLogin(newAccount.getLogin());
+            account.setPassword(newAccount.getPassword());
+            account.setMail(newAccount.getMail());
+            newAccount.getAddress().setId(account.getAddress().getId());
+            account.setAddress(newAccount.getAddress());
             accountService.saveOrUpdate(account);
-            return "redirect:profile";
         }
+        return "redirect:profile";
     }
 
     @InitBinder
